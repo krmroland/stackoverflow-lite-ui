@@ -1,0 +1,39 @@
+{
+  "name": "stackoverflow-lite-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch":
+      "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
+    "production":
+      "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "keywords": ["andela uganda", "andela-bootcamp", "stackoverflow-lite"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krmroland/stackoverflow-lite-ui/issues"
+  },
+  "dependencies": {
+    "browser-sync-webpack-plugin": "^2.2.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.1.0",
+    "browser-sync": "^2.24.6",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "handlebars-webpack-plugin": "^1.5.0",
+    "node-sass": "^4.9.2",
+    "postcss-loader": "^2.1.6",
+    "pretty": "^2.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.0",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-notifier": "^1.6.0"
+  }
+}
