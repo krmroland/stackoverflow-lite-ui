@@ -1,5 +1,9 @@
 const path = require('path');
 
+const glob = require('glob-all');
+
+const PurgecssPlugin = require('purgecss-webpack-plugin');
+
 //reload browsers on every change
 
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
@@ -65,6 +69,9 @@ const config = {
                                         // dont add old flexbox spec properties for webkit
                                         flexbox: 'no-2009'
                                     })
+                                    // purgecss({
+                                    //     content: ['./src/**/*.hbs']
+                                    // })
                                 ]
                             }
                         },
@@ -105,7 +112,11 @@ const config = {
             }
         }),
         //extract css out of the js modules
-        new ExtractTextPlugin('css/app.css')
+        new ExtractTextPlugin('css/app.css'),
+        new PurgecssPlugin({
+            paths: glob.sync([`./src/**/*.hbs`]),
+            rejected: true
+        })
     ]
 };
 
