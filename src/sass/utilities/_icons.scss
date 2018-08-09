@@ -1,0 +1,24 @@
+@each $color, $value in $colors {
+    .fill-#{$color} {
+        svg {
+            fill: $value;
+        }
+    }
+}
+
+@each $size,
+    $value in (small: 1rem, medium: 1.25rem, large: 1.5rem, larger: 4rem)
+{
+    .icon-#{$size} {
+        svg {
+            height: $value;
+            width: $value;
+        }
+    }
+}
+
+.has-icon {
+    svg {
+        margin-bottom: -0.5em;
+    }
+}

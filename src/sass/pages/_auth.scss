@@ -1,0 +1,23 @@
+#Auth {
+    width: 80%;
+    min-height: 90vh;
+    margin: 5vh auto;
+}
+
+@media (max-width: $breakpoint-lg) {
+    #Auth {
+        width: 95%;
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    #Auth {
+        border-top: 8px solid $primary-dark;
+        min-height: 99vh;
+        margin: 1vh auto;
+        flex-direction: column-reverse;
+        * {
+            flex-grow: 1;
+        }
+    }
+}

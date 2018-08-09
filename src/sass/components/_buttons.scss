@@ -1,0 +1,46 @@
+.btn {
+    font-size: 1rem;
+    display: button;
+    padding: 0.25em 1em;
+    border: 1px solid transparent;
+    display: inline-block;
+    vertical-align: middle;
+
+    text-align: center;
+    &:hover {
+        cursor: pointer;
+        font-weight: 600;
+    }
+}
+
+a.btn {
+    text-decoration: none;
+}
+
+.btn-light {
+    color: $primary;
+    background-color: $light;
+}
+
+.btn-primary {
+    background-color: $primary;
+    border: 1px solid $primary-light;
+    color: $white;
+}
+.btn-secondary {
+    background-color: $accent;
+    border: 1px solid $accent-light;
+    color: $white;
+}
+.btn-dark {
+    background-color: $dark;
+    color: $white;
+}
+
+.btn-round {
+    border-radius: 0.25em;
+}
+@include responsive(btn-block) {
+    display: block;
+    width: 100%;
+}

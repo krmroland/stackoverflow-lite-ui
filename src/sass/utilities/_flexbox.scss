@@ -1,0 +1,33 @@
+@include responsive(d-flex) {
+    display: flex;
+}
+@include responsive(d-block) {
+    display: block;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+$positions: (
+    center: 'center',
+    start: 'flex-start',
+    end: 'flex-end',
+    between: 'space-between'
+);
+@each $prefix, $value in $positions {
+    .justify-#{$prefix} {
+        justify-content: unquote($value);
+    }
+    .align-#{$prefix} {
+        align-items: unquote($value);
+    }
+    .align-self-#{$prefix} {
+        align-self: unquote($value);
+    }
+}
+
+@each $value in ('column', 'column-reverse', 'row', 'row-reverse') {
+    .flex-#{$value} {
+        flex-direction: unquote($value);
+    }
+}

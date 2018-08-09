@@ -1,0 +1,26 @@
+$primary: #5449d2;
+$primary-light: #6558fc;
+$primary-dark: #433aa8;
+$black: #1f1f21;
+$dark: #404044;
+$light: #cbcbce;
+$white: #f9f9fa;
+$accent: #c6d149;
+$accent-light: #eefb58;
+$accent-dark: #9ea73a;
+$grey: #b8c2cc;
+$grey-light: #dae1e7;
+
+$colors: (
+    primary: $primary,
+    primary-light: $primary-light,
+    primary-dark: $primary-dark,
+    white: $white,
+    dark: $dark,
+    grey: $grey,
+    light-grey: $grey-light,
+    light: $light,
+    accent: $accent,
+    accent-light: $accent-light,
+    accent-dark: $accent-dark
+);

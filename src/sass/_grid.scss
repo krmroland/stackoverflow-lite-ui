@@ -1,0 +1,19 @@
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+
+    //use a 12 grid column since 12 is divisible by  2,3,4 and 6
+    @for $i from 1 through 12 {
+        .column-#{$i} {
+            flex: 0 0 percentage($i/12);
+        }
+    }
+
+    @media (max-width: $breakpoint-md) {
+        @for $i from 1 through 12 {
+            .column-#{$i} {
+                flex: 0 0 100%;
+            }
+        }
+    }
+}

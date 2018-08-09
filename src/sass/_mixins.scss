@@ -1,0 +1,20 @@
+$screens: (
+    xl: $breakpoint-xl,
+    lg: $breakpoint-lg,
+    md: $breakpoint-md,
+    sm: $breakpoint-sm
+);
+
+@mixin responsive($class) {
+    @each $screen, $size in $screens {
+        .#{$class} {
+            @content;
+        }
+
+        @media (max-width: $size) {
+            .#{$class}-#{$screen} {
+                @content;
+            }
+        }
+    }
+}
