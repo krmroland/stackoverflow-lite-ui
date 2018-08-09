@@ -4,6 +4,10 @@ const glob = require('glob-all');
 
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const layouts = require('handlebars-layouts');
+
 //reload browsers on every change
 
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
@@ -26,6 +30,8 @@ const inProduction = mode === 'production';
 
 //copy assets from the src directory to the dist directory
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = {
     mode,
@@ -54,10 +60,7 @@ const config = {
                     fallback: 'style-loader',
                     use: [
                         {
-                            loader: 'css-loader',
-                            options: {
-                                minimize: inProduction
-                            }
+                            loader: 'css-loader'
                         },
                         {
                             loader: 'postcss-loader',
@@ -65,13 +68,11 @@ const config = {
                                 ident: 'postcss',
                                 plugins: [
                                     new require('autoprefixer')({
-                                        browsers: ['>1%', 'last 2 versions'],
+                                        browsers: ['>1%'],
                                         // dont add old flexbox spec properties for webkit
                                         flexbox: 'no-2009'
-                                    })
-                                    // purgecss({
-                                    //     content: ['./src/**/*.hbs']
-                                    // })
+                                    }),
+                                    require('css-mqpacker')({ sort: true })
                                 ]
                             }
                         },
@@ -90,6 +91,7 @@ const config = {
     },
 
     plugins: [
+        new CleanWebpackPlugin([path.resolve(__dirname, 'ui')]),
         new WebpackNotifier({
             alwaysNotify: true,
             title: 'Compilation was successful',
@@ -105,18 +107,18 @@ const config = {
         new HandlebarsPlugin({
             entry: path.join(__dirname, 'src', 'pages', '*.hbs'),
             output: path.join(__dirname, 'ui', '[name].html'),
-            partials: [path.join(__dirname, 'src', 'partials', '*.hbs')],
-            onBeforeSave: (Handlebars, resultHtml) => {
+            partials: [path.join(__dirname, 'src', '**', '*.hbs')],
+
+            onBeforeSave(Handlebars, resultHtml) {
                 //prettify html
                 return pretty(resultHtml);
+            },
+            onBeforeSetup(handlebars) {
+                handlebars.registerHelper(layouts(handlebars));
             }
         }),
         //extract css out of the js modules
-        new ExtractTextPlugin('css/app.css'),
-        new PurgecssPlugin({
-            paths: glob.sync([`./src/**/*.hbs`]),
-            rejected: true
-        })
+        new ExtractTextPlugin('css/app.css')
     ]
 };
 
@@ -127,6 +129,25 @@ if (!inProduction) {
             port: 7000,
             server: { baseDir: [path.resolve(__dirname, 'ui')] },
             open: true
+        })
+    );
+}
+
+if (mode === 'none') {
+    config.plugins.push(
+        new PurgecssPlugin({
+            paths: glob.sync([`./src/**/*.hbs`])
+        })
+    );
+}
+
+if (inProduction) {
+    config.plugins.push(
+        new OptimizeCssAssetsPlugin({
+            canPrint: true
+        }),
+        new PurgecssPlugin({
+            paths: glob.sync([`./src/**/*.hbs`])
         })
     );
 }
