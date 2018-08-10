@@ -6,11 +6,10 @@ $screens: (
 );
 
 @mixin responsive($class) {
+    .#{$class} {
+        @content;
+    }
     @each $screen, $size in $screens {
-        .#{$class} {
-            @content;
-        }
-
         @media (max-width: $size) {
             .#{$class}-#{$screen} {
                 @content;
