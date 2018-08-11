@@ -1,0 +1,26 @@
+{{#extend "layouts/app"}}
+{{#content "main"}}
+<div class="p-3 p-1-md">
+   <div class="bg-white  shadow-lg p-3"> 
+       <h3>Ask Away</h3>
+       <form action="questions.html">
+          <div class="field">
+              <label for="">Provide a title</label>
+              <input type="text" class="input" placeholder="">
+          </div> 
+          <div class="field">
+              <label for="">Description</label>
+              <textarea  rows="2" placeholder="Be specific so that your peers can help" class="input">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero reiciendis quasi, officia vitae nemo aperiam voluptas rerum voluptatum vel mollitia inventore sed ipsam optio ratione, eius odio, suscipit et temporibus accusamus possimus! Illum et dignissimos odio vero, unde iste asperiores error consectetur eaque eos minus optio similique, vitae doloremque quisquam! Dolorum quaerat a sit aperiam laboriosam possimus impedit, porro ipsa? Ipsum ut earum nisi corporis autem exercitationem ipsam accusantium expedita sit dolores vitae, dolore eos vel quisquam impedit deserunt incidunt, ratione, et nulla fugit rerum sunt eum. Dolorem itaque a tempore at molestiae ab, nam libero recusandae deleniti, maiores, reiciendis.</textarea>
+          </div> 
+          <div class="field">
+              <button class="btn btn-primary">
+                {{>icons/IconBook}}
+                Publish
+                
+            </button>
+        </div>
+    </form>  </div>
+</div>
+
+{{/content}}
+{{/extend}}
