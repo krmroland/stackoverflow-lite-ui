@@ -10,9 +10,12 @@
     }
 }
 
+#top-header {
+    border-left: 8px solid $accent-light;
+}
 @media (max-width: $breakpoint-md) {
     #Auth {
-        border-top: 8px solid $primary-dark;
+        border-top: 8px solid $primary;
         min-height: 99vh;
         margin: 1vh auto;
         flex-direction: column-reverse;

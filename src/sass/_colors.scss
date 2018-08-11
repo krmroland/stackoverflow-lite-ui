@@ -1,24 +1,22 @@
-$primary: #5449d2;
-$primary-light: #6558fc;
-$primary-dark: #433aa8;
-$black: #1f1f21;
-$dark: #404044;
-$light: #cbcbce;
-$white: #f9f9fa;
-$accent: #c6d149;
-$accent-light: #eefb58;
-$accent-dark: #9ea73a;
+$primary: #343435;
+$black: #181818;
+$dark: #323232;
+$light: #dae1e7;
+$white: #f8f8f8;
+$accent: #22ff58;
+$accent-light: #29ff6a;
+$accent-dark: #1bcc46;
 $grey: #b8c2cc;
+$grey-dark: #606f7b;
 $grey-light: #dae1e7;
 
 $colors: (
     primary: $primary,
-    primary-light: $primary-light,
-    primary-dark: $primary-dark,
     white: $white,
     dark: $dark,
     grey: $grey,
-    light-grey: $grey-light,
+    grey-light: $grey-light,
+    grey-dark: $grey-dark,
     light: $light,
     accent: $accent,
     accent-light: $accent-light,
