@@ -38,10 +38,22 @@ $directions: (
 }
 
 //width and heights
-.mh-100vh {
+@include responsive(mh-100vh) {
     min-height: 100vh;
 }
 
-h-100 {
-    height: 100%;
+//widths and heights
+$dimensions: (
+    50: 50px,
+    75: 75px,
+    150: 150px
+);
+
+@each $prefix, $dimension in $dimensions {
+    .w-#{$prefix} {
+        width: $dimension;
+    }
+    .h-#{$prefix} {
+        height: $dimension;
+    }
 }

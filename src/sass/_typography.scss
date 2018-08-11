@@ -5,7 +5,9 @@ p {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   font-family: $font-serif;
   margin: 1rem 0 0.5rem;
   font-weight: inherit;
@@ -26,6 +28,12 @@ h3 {
 
 h4 {
   font-size: $font-h4;
+}
+h5 {
+  font-size: $font-h5;
+}
+h5 {
+  font-size: $font-h6;
 }
 
 small {

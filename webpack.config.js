@@ -37,7 +37,8 @@ const config = {
     mode,
     //entry points
     entry: {
-        css: './src/sass/app.scss'
+        css: './src/sass/app.scss',
+        js: './src/js/app.js'
     },
 
     //destination for trans-piled files
@@ -53,6 +54,10 @@ const config = {
     },
     module: {
         rules: [
+            {
+                test: path.resolve(__dirname, 'src/js/app.js'),
+                loader: 'babel-loader'
+            },
             {
                 //use absolute path to speed up module resolution instead of regular expressions like test:/\.scss$/
                 test: path.resolve(__dirname, 'src/sass/app.scss'),
@@ -108,6 +113,7 @@ const config = {
             entry: path.join(__dirname, 'src', 'pages', '*.hbs'),
             output: path.join(__dirname, 'ui', '[name].html'),
             partials: [path.join(__dirname, 'src', '**', '*.hbs')],
+            data: path.join(__dirname, 'src/dummyData.json'),
 
             onBeforeSave(Handlebars, resultHtml) {
                 //prettify html

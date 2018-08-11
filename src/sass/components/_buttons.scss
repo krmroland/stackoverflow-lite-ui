@@ -7,9 +7,14 @@
     vertical-align: middle;
 
     text-align: center;
-    &:hover {
+    &:hover,
+    active {
         cursor: pointer;
         font-weight: 600;
+        outline: 1px solid $primary;
+    }
+    svg {
+        margin-bottom: -5px;
     }
 }
 
@@ -18,13 +23,13 @@ a.btn {
 }
 
 .btn-light {
-    color: $primary;
+    color: $dark;
     background-color: $light;
 }
 
 .btn-primary {
     background-color: $primary;
-    border: 1px solid $primary-light;
+    border: 1px solid $primary;
     color: $white;
 }
 .btn-secondary {
@@ -40,6 +45,7 @@ a.btn {
 .btn-round {
     border-radius: 0.25em;
 }
+
 @include responsive(btn-block) {
     display: block;
     width: 100%;

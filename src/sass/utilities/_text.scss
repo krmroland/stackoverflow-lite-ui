@@ -21,11 +21,32 @@ $sizes: (
     h2: $font-h2,
     h3: $font-h3,
     h4: $font-h4,
-    small: $font-small
+    small: $font-small,
+    1: 1rem,
+    md: 1.25rem
 );
 
 @each $size, $value in $sizes {
     @include responsive(text + '-' + $size) {
         font-size: $value;
+    }
+}
+
+@each $case in (lower, upper) {
+    .text-#{$case} {
+        text-transform: $case + 'case';
+    }
+}
+
+.font-serif {
+    font-family: $font-serif;
+}
+
+.font-sans {
+    font-family: $font-sans-serif;
+}
+@for $i from 1 through 4 {
+    .spacing-#{$i} {
+        letter-spacing: $i * 0.125 + em;
     }
 }

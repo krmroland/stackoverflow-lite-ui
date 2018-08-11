@@ -7,7 +7,7 @@
 }
 
 @each $size,
-    $value in (small: 1rem, medium: 1.25rem, large: 1.5rem, larger: 4rem)
+    $value in (1: 1rem, 2: 1.25rem, 3: 1.5rem, 4: 2rem, 5: 2.5rem, 6: 4rem)
 {
     .icon-#{$size} {
         svg {

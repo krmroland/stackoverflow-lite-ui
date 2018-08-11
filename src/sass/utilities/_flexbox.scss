@@ -1,9 +1,6 @@
 @include responsive(d-flex) {
     display: flex;
 }
-@include responsive(d-block) {
-    display: block;
-}
 
 .flex-wrap {
     flex-wrap: wrap;
@@ -12,7 +9,8 @@ $positions: (
     center: 'center',
     start: 'flex-start',
     end: 'flex-end',
-    between: 'space-between'
+    between: 'space-between',
+    around: 'space-around'
 );
 @each $prefix, $value in $positions {
     .justify-#{$prefix} {
@@ -27,7 +25,7 @@ $positions: (
 }
 
 @each $value in ('column', 'column-reverse', 'row', 'row-reverse') {
-    .flex-#{$value} {
+    @include responsive(flex- + $value) {
         flex-direction: unquote($value);
     }
 }
