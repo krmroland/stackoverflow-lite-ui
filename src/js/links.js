@@ -6,11 +6,6 @@ const questionFilters = document.querySelectorAll(
 
 let { pathname } = window.location;
 
-//normalize link path for index pages
-if (pathname === '/index.html') {
-    pathname = '/';
-}
-
 sidebarLinks.forEach(
     link => (pathname === link.pathname ? link.classList.add('active') : null)
 );
