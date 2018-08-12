@@ -6,7 +6,9 @@
   "scripts": {
     "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
     "build": "cross-env NODE_ENV=none webpack --progress --hide-modules",
-    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "cleanup": "rm -rf node_modules/gh-pages/.cache",
+    "deploy": "cross-env NODE_DEBUG=gh-pages npm run production && npm run cleanup && gh-pages -d ui"
   },
   "keywords": [
     "andela uganda",
@@ -45,5 +47,7 @@
     "webpack-cli": "^3.1.0",
     "webpack-notifier": "^1.6.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "gh-pages": "^1.2.0"
+  }
 }
