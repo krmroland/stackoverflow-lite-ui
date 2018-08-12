@@ -139,12 +139,13 @@ if (!inProduction) {
     );
 }
 
+const CleanCss = new PurgecssPlugin({
+    paths: glob.sync([`./src/**/*.hbs`, `./src/js/*.js`]),
+    whitelist: ['active']
+});
+
 if (mode === 'none') {
-    config.plugins.push(
-        new PurgecssPlugin({
-            paths: glob.sync([`./src/**/*.hbs`])
-        })
-    );
+    config.plugins.push(CleanCss);
 }
 
 if (inProduction) {
@@ -152,9 +153,7 @@ if (inProduction) {
         new OptimizeCssAssetsPlugin({
             canPrint: true
         }),
-        new PurgecssPlugin({
-            paths: glob.sync([`./src/**/*.hbs`])
-        })
+        CleanCss
     );
 }
 module.exports = config;
