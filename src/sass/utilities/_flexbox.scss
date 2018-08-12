@@ -29,3 +29,9 @@ $positions: (
         flex-direction: unquote($value);
     }
 }
+
+@for $i from 0 through 4 {
+    .flex-#{$i} {
+        flex: $i;
+    }
+}

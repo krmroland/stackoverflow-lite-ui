@@ -46,14 +46,15 @@ $directions: (
 $dimensions: (
     50: 50px,
     75: 75px,
+    100: 100px,
     150: 150px
 );
 
 @each $prefix, $dimension in $dimensions {
-    .w-#{$prefix} {
+    @include responsive(w- + $prefix) {
         width: $dimension;
     }
-    .h-#{$prefix} {
+    @include responsive(h- + $prefix) {
         height: $dimension;
     }
 }
