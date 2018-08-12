@@ -3,7 +3,7 @@
 <div class="columns mt-2 mt-1-md" id="Questions">
     <div class="column-9 px-2">
         {{#each questions}}
-        {{>partials/question}}
+            {{>partials/question question=this}}
         {{/each}}
     </div>
     <div class="column-3 px-1 py-3 px-0-md mt-0 mt-2-md shadow-lg ">

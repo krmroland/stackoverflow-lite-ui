@@ -44,6 +44,13 @@ a {
         font-weight: 600;
     }
 }
+hr {
+    border-color: $grey;
+    color: $grey;
+    background-color: $grey;
+    opacity: 0.1;
+    margin-top: 1em;
+}
 @media (max-width: $breakpoint-sm) {
     html {
         line-height: 1.25;

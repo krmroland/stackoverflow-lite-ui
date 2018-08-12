@@ -1,7 +1,7 @@
 {
     "learned": ["Service Workers", "Indexed DB", "Es6"],
-    "questions": [
-        {
+    "questions": {
+        "q1": {
             "title": "Lorem ipsum dolor sit amet.",
             "date": "2 minutes ago",
             "description":
@@ -9,9 +9,29 @@
             "user": {
                 "name": "Ahimbisibwe Roland",
                 "avatar": "user1.png"
+            },
+            "answers": {
+                "ans1": {
+                    "body":
+                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, nulla.",
+                    "user": {
+                        "name": "Ahimbisibwe Roland",
+                        "avatar": "user1.png"
+                    },
+                    "date": "37 minutes ago"
+                },
+                "ans2": {
+                    "body":
+                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam ipsum molestiae culpa facilis quidem magni provident incidunt consequatur, iste officiis! Fugiat debitis cum harum recusandae incidunt ab perspiciatis, mollitia sint!",
+                    "user": {
+                        "name": "Kabatereine Rodgers",
+                        "avatar": "user2.png"
+                    },
+                    "date": "an hour ago"
+                }
             }
         },
-        {
+        "q2": {
             "title": "Lorem ipsum dolor sit amet, consectetur.",
             "date": "15 minutes ago",
             "description":
@@ -21,7 +41,7 @@
                 "avatar": "user2.png"
             }
         },
-        {
+        "q3": {
             "title": "Lorem ipsum dolor sit amet, consectetur adipisicing.",
             "date": "2 days ago",
             "description":
@@ -31,7 +51,7 @@
                 "avatar": "user3.png"
             }
         },
-        {
+        "q4": {
             "title": "Lorem ipsum dolor sit amet, consectetur adipisicing.",
             "date": "a month ago",
             "description":
@@ -41,5 +61,5 @@
                 "avatar": "user3.png"
             }
         }
-    ]
+    }
 }
