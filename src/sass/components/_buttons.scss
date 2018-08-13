@@ -5,14 +5,13 @@
     border: 1px solid transparent;
     display: inline-block;
     vertical-align: middle;
-
     text-align: center;
     &:hover,
     &:active,
     &:focus {
         cursor: pointer;
         font-weight: 600;
-        outline: 1px solid $primary;
+        outline: currentColor;
     }
     svg {
         margin-bottom: -5px;
