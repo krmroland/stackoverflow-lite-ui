@@ -4,6 +4,11 @@
             fill: $value;
         }
     }
+    .stroke-#{$color} {
+        svg {
+            stroke: $value;
+        }
+    }
 }
 
 @each $size,
