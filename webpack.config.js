@@ -33,6 +33,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+
 const config = {
     mode,
     //entry points
@@ -108,6 +110,10 @@ const config = {
                 to: path.resolve(__dirname, 'ui/images')
             }
         ]),
+        new ImageminPlugin({
+            test: /\.(jpe?g|png|gif|svg)$/i,
+            disable: mode === 'development'
+        }),
 
         new HandlebarsPlugin({
             entry: path.join(__dirname, 'src', 'pages', '*.hbs'),

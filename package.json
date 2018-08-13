@@ -36,6 +36,7 @@
     "glob-all": "^3.1.0",
     "handlebars-layouts": "^3.1.4",
     "handlebars-webpack-plugin": "^1.5.0",
+    "imagemin-webpack-plugin": "^2.2.0",
     "node-sass": "^4.9.2",
     "optimize-css-assets-webpack-plugin": "^5.0.0",
     "postcss-loader": "^2.1.6",
