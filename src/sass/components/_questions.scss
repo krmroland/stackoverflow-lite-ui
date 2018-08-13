@@ -1,0 +1,30 @@
+#Questions {
+    .question-filter {
+        display: block;
+        color: $grey;
+        text-decoration: none;
+        padding: 0.25em 1em;
+        &:not(:last-child) {
+            border-bottom: 1px solid $light;
+        }
+        &:hover {
+            background-color: $light;
+            padding-left: 1.5em;
+        }
+
+        &.active {
+            font-weight: 900;
+            color: $grey-dark;
+            border-left: 4px solid $accent;
+        }
+    }
+    .question-filter {
+        display: block;
+    }
+    .question-filter-icon {
+        svg {
+            margin-bottom: -5px;
+            fill: $accent-light;
+        }
+    }
+}

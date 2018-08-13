@@ -1,0 +1,28 @@
+{{#extend "layouts/app"}}
+{{#content "main"}}
+<div class="p-3 p-1-md">
+   <div class="bg-white  shadow-lg p-3"> 
+       <h3>Ask Away</h3>
+       <form action="index.html">
+          <div class="field">
+              <label for="">Provide a title</label>
+              <input type="text" class="input" placeholder="">
+          </div> 
+          <div class="field">
+              <label for="">Description</label>
+              <textarea  rows="2" placeholder="Be specific so that your peers can help" class="input">
+                  
+              </textarea>
+          </div> 
+          <div class="field">
+              <button class="btn btn-primary">
+                {{>icons/IconBook}}
+                Publish
+                
+            </button>
+        </div>
+    </form>  </div>
+</div>
+
+{{/content}}
+{{/extend}}

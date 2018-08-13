@@ -1,0 +1,60 @@
+$spacings: (
+    0: 0,
+    1: 0.25em,
+    2: 0.5em,
+    3: 1em,
+    4: 1.5em,
+    5: 2em
+);
+
+$directions: (
+    t: top,
+    b: bottom,
+    l: left,
+    r: right
+);
+
+@each $space, $value in $spacings {
+    @each $short, $property in (m: margin, p: padding) {
+        @include responsive($short + '-' + $space) {
+            #{$property}: $value;
+        }
+
+        @each $prefix, $direction in $directions {
+            @include responsive($short + $prefix + '-' + $space) {
+                #{$property}-#{$direction}: $value;
+            }
+        }
+        //horizontal and vertical spacings
+        @include responsive($short + 'x-' + $space) {
+            #{$property}-left: $value;
+            #{$property}-right: $value;
+        }
+        @include responsive($short + 'y-' + $space) {
+            #{$property}-top: $value;
+            #{$property}-bottom: $value;
+        }
+    }
+}
+
+//width and heights
+@include responsive(mh-100vh) {
+    min-height: 100vh;
+}
+
+//widths and heights
+$dimensions: (
+    50: 50px,
+    75: 75px,
+    100: 100px,
+    150: 150px
+);
+
+@each $prefix, $dimension in $dimensions {
+    @include responsive(w- + $prefix) {
+        width: $dimension;
+    }
+    @include responsive(h- + $prefix) {
+        height: $dimension;
+    }
+}

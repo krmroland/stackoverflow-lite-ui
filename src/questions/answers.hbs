@@ -1,0 +1,18 @@
+<div class="p-3  d-flex align-center">
+    {{>partials/userAvatar user=question.user}}
+  <div class="ml-2 lh-loose">
+      <h4  class="fw-600"> {{question.title}}</h4>
+      <p class="text-grey-dark">
+       {{question.description}}
+     </p>
+     {{>questions/foot}}
+  </div>
+</div>
+<h4 class="px-3">3 Answers</h4>
+<hr>
+
+{{#each questions.q1.answers}}
+    {{>questions/answer answer=this}}
+{{/each}}
+
+{{>questions/answerForm}}

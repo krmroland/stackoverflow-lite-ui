@@ -1,0 +1,24 @@
+$primary: #343435;
+$black: #181818;
+$dark: #323232;
+$light: #dae1e7;
+$white: #f8f8f8;
+$accent: #22ff58;
+$accent-light: #29ff6a;
+$accent-dark: #1bcc46;
+$grey: #b8c2cc;
+$grey-dark: #606f7b;
+$grey-light: #dae1e7;
+
+$colors: (
+    primary: $primary,
+    white: $white,
+    dark: $dark,
+    grey: $grey,
+    grey-light: $grey-light,
+    grey-dark: $grey-dark,
+    light: $light,
+    accent: $accent,
+    accent-light: $accent-light,
+    accent-dark: $accent-dark
+);

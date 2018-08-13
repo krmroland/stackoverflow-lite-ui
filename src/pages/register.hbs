@@ -1,0 +1,43 @@
+{{#extend "layouts/auth" title="Stack overlfow light" }}
+   {{#content "main"}}
+   <div class="p-1">
+      <h3 class="fw-600 text-h4-sm">Register</h3>
+       <form action="index.html" class="mt-3">
+        <!--  email field -->
+           <div class="field">
+              <label for="">Name</label>
+               <input type="text" class="input bg-light-grey  text-dark">
+           </div>
+        <!--  email field -->
+           <div class="field">
+              <label for="">Email</label>
+               <input type="text" class="input bg-light-grey  text-dark">
+           </div>
+        <!--  password -->
+           <div class="field">
+              <label for="">Password</label>
+               <input type="password" class="input bg-light-grey text-dark">
+           </div>
+        <!--  confirm password -->
+           <div class="field">
+              <label for="">Confirm Password</label>
+               <input type="password" class="input bg-light-grey text-dark">
+           </div>
+
+        <div class="field d-flex d-block-md justify-between">
+            <div>
+                <button class="btn btn-primary btn-block-md">
+                    Register
+                </button>
+            </div>
+        
+            <div class="mt-3">
+                <a href="login.html" class="d-block">Sign In Instead</a>
+            </div>
+          
+        </div>
+       </form>
+   </div>
+       
+   {{/content}}
+{{/extend}}

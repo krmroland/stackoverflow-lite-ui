@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>partials/head title=title}}
+<body class="bg-light">
+    <main id="Auth" class="columns shadow-lg">
+        <section class="column-5  d-flex justify-center align-center bg-dark p-3  text-white flex-column">
+            <i class="fill-white icon-6">
+                {{>icons/IconBook}}
+            </i>
+          <h3 class=" fw-900 text-center text-h4-sm">
+              Stack overflow
+          </h3>
+          <ul class="list-style-none  align-self-start">
+            <li class="text-large py-1 has-icon">
+              <i class="icon-3 fill-accent-light ">{{>icons/IconCheck}}</i>
+              Join the community
+            </li>
+            <li class="text-large py-1 has-icon">
+              <i class="icon-3 fill-accent-light ">{{>icons/IconCheck}}</i>
+              Ask questions 
+            </li>
+            <li class="text-large py-1 has-icon">
+              <i class="icon-3 fill-accent-light ">{{>icons/IconCheck}}</i>
+              Post Answers
+            </li>
+          </ul>
+        </section>
+          <section class="column-7 bg-white p-5 p-2-xl">
+            {{#block "main"}}{{/block}}
+        </section>
+    </main>
+</body>
+</html>

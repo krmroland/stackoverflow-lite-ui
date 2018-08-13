@@ -1,0 +1,44 @@
+.rounded {
+    border-radius: 50%;
+}
+$border-width: (
+    none: none,
+    1: 1px,
+    2: 2px,
+    3: 3px,
+    4: 4px,
+    5: 5px,
+    6: 6px
+);
+
+$sides: (
+    l: left,
+    r: right,
+    b: bottom,
+    t: top
+);
+
+@each $i, $width in $border-width {
+    .border-#{$i} {
+        @if ($width==none) {
+            border: none;
+        } @else {
+            border: #{$width} solid transparent;
+        }
+    }
+    @each $key, $value in $sides {
+        .border-#{$key}-#{$i} {
+            @if ($width==none) {
+                border-#{$value}: none;
+            } @else {
+                border-#{$value}: #{$width} solid transparent;
+            }
+        }
+    }
+}
+
+@each $color, $value in $colors {
+    .border-#{$color} {
+        border-color: $value;
+    }
+}

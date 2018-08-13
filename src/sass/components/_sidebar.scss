@@ -1,0 +1,51 @@
+#Sidebar {
+    position: fixed;
+    top: 75px;
+    bottom: 0;
+    left: 0;
+
+    .sidbar-links {
+        color: $white;
+        font-family: $font-serif;
+        font-size: 3rem;
+    }
+    .sidebar-link {
+        color: $white;
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        padding: 0.25em 0.5em;
+        &:hover {
+            text-decoration: none;
+            background-color: $black;
+            // color: $dark;
+        }
+    }
+    .sidebar-link-icon {
+        svg {
+            height: 1.5rem;
+            width: 1.5rem;
+            margin-bottom: -0.25em;
+        }
+    }
+    .sidebar-link-text {
+        padding-left: 0.5em;
+    }
+    .active {
+        border-right: 6px solid $accent-light;
+        background-color: $black;
+        svg {
+            fill: $accent-light;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    #Sidebar {
+        margin-top: 1em;
+        position: static;
+        aside {
+            border-top: 1px solid $grey-light;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+@each $prefix, $value in $colors {
+    .bg-#{$prefix} {
+        background-color: $value;
+    }
+}
+
+.shadow {
+    box-shadow: $shadow;
+}
+
+.shadow-lg {
+    box-shadow: $shadow-lg;
+}

@@ -1,0 +1,65 @@
+{
+    "learned": ["Service Workers", "Indexed DB", "Es6"],
+    "questions": {
+        "q1": {
+            "title": "Lorem ipsum dolor sit amet.",
+            "date": "2 minutes ago",
+            "description":
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, ipsum dignissimos saepe culpa aperiam nostrum!",
+            "user": {
+                "name": "Ahimbisibwe Roland",
+                "avatar": "user1.png"
+            },
+            "answers": {
+                "ans1": {
+                    "body":
+                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, nulla.",
+                    "user": {
+                        "name": "Ahimbisibwe Roland",
+                        "avatar": "user1.png"
+                    },
+                    "date": "37 minutes ago"
+                },
+                "ans2": {
+                    "body":
+                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam ipsum molestiae culpa facilis quidem magni provident incidunt consequatur, iste officiis! Fugiat debitis cum harum recusandae incidunt ab perspiciatis, mollitia sint!",
+                    "user": {
+                        "name": "Kabatereine Rodgers",
+                        "avatar": "user2.png"
+                    },
+                    "date": "an hour ago"
+                }
+            }
+        },
+        "q2": {
+            "title": "Lorem ipsum dolor sit amet, consectetur.",
+            "date": "15 minutes ago",
+            "description":
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa praesentium saepe quidem cumque nulla tenetur sapiente error blanditiis debitis, rem.",
+            "user": {
+                "name": "Nabaasa Richard",
+                "avatar": "user2.png"
+            }
+        },
+        "q3": {
+            "title": "Lorem ipsum dolor sit amet, consectetur adipisicing.",
+            "date": "2 days ago",
+            "description":
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta veritatis ad veniam. Distinctio tempore iusto ea officia corporis perferendis, dolorem, quaerat ipsa accusantium officiis magni dolor inventore obcaecati deleniti cum.",
+            "user": {
+                "name": "Mbasa Richard",
+                "avatar": "user3.png"
+            }
+        },
+        "q4": {
+            "title": "Lorem ipsum dolor sit amet, consectetur adipisicing.",
+            "date": "a month ago",
+            "description":
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta veritatis ad veniam. Distinctio tempore iusto ea officia corporis perferendis, dolorem, quaerat ipsa accusantium officiis magni dolor inventore obcaecati deleniti cum.",
+            "user": {
+                "name": "Ayebare Justus",
+                "avatar": "user3.png"
+            }
+        }
+    }
+}
