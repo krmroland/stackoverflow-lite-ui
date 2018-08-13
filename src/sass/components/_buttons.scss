@@ -8,7 +8,8 @@
 
     text-align: center;
     &:hover,
-    active {
+    &:active,
+    &:focus {
         cursor: pointer;
         font-weight: 600;
         outline: 1px solid $primary;
