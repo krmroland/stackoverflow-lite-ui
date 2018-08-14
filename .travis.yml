@@ -4,7 +4,8 @@ python:
 before_script:
   - cd api
   - pip3 install -r requirements.txt
-
+after_success:
+  - coveralls
 script:
   - py.test   -v --cov app --cov-report term-missing
 
