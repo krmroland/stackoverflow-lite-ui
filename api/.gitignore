@@ -1,8 +1,0 @@
-*.log
-/venv
-.py[co]
-*.DS_*
-.coverage
-/__pycache__
-__pycache__/
-.pytest_cache/

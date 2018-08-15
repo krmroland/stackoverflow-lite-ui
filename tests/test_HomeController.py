@@ -1,4 +1,4 @@
-from api.tests import BaseTestCase
+from tests import BaseTestCase
 
 
 class TestHomeController(BaseTestCase):

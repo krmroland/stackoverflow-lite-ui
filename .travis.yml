@@ -1,11 +1,10 @@
 language: python
 python:
-  - '3.6.5'
+  - '3.6'
 before_script:
-  - cd api
   - pip3 install -r requirements.txt
 after_success:
   - coveralls
 script:
-  - py.test   -v --cov app --cov-report term-missing
+  - pytest   -v --cov api/app --cov-report term-missing
 

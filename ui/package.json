@@ -4,17 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
+    "watch":
+      "cross-env NODE_ENV=development webpack --progress --hide-modules --watch --watch-poll",
     "build": "cross-env NODE_ENV=none webpack --progress --hide-modules",
-    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "production":
+      "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "cleanup": "rm -rf node_modules/gh-pages/.cache",
-    "deploy": "cross-env NODE_DEBUG=gh-pages npm run production && npm run cleanup && gh-pages -d ui"
+    "deploy":
+      "cross-env NODE_DEBUG=gh-pages npm run production && npm run cleanup && gh-pages -d dist"
   },
-  "keywords": [
-    "andela uganda",
-    "andela-bootcamp",
-    "stackoverflow-lite"
-  ],
+  "keywords": ["andela uganda", "andela-bootcamp", "stackoverflow-lite"],
   "author": "",
   "license": "ISC",
   "bugs": {
