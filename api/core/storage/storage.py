@@ -69,6 +69,9 @@ class ModelCollection:
     def __len__(self):
         return self.count()
 
+    def to_json(self):
+        return [model.to_json() for model in self.models]
+
     def first(self):
         try:
             return self.models[0]
@@ -84,6 +87,7 @@ class ModelCollection:
 
 class Model:
     timestamps = True
+    hidden = []
 
     @classmethod
     def table_name(cls):
@@ -160,6 +164,14 @@ class Model:
     @classmethod
     def hydrate(cls, models):
         return list(map(cls, models))
+
+    def to_json(self):
+
+        return {
+            key: self.attributes[key]
+            for key in self.attributes
+            if (key not in self.hidden)
+        }
 
     @classmethod
     def all(cls):

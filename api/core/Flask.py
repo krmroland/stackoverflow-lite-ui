@@ -1,8 +1,11 @@
 from flask import Flask as BaseFlask, request
 from .routing.Router import Router
+from .JSONEncoder import JSONEncoder
 
 
 class Flask(BaseFlask):
+
+    json_encoder = JSONEncoder
 
     def dispatch_request(self):
         """triggers an action related  to this request"""
