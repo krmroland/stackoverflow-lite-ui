@@ -4,5 +4,5 @@ from .controllers import *
 
 Router.group([
     Router.get("/", HomeController, "index"),
-    Router.resource("/questions", HomeController)
+    Router.resource("/questions", QuestionsController)
 ]).prefix("/api/v1.0")

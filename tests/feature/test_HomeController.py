@@ -1,4 +1,4 @@
-from tests import BaseTestCase
+from tests.feature import BaseTestCase
 
 
 class TestHomeController(BaseTestCase):
