@@ -39,3 +39,12 @@ class TestQuestions(BaseTestCase):
     def test_it_fails_getting_a_question_given_a_non_id(self):
         rv = self.get("/questions/1")
         self.assertEqual(rv.status_code, 404)
+
+    def test_it_returns_a_200_status_code_when_deleting_an_existing_id(self):
+        self.post("/questions", self.question)
+        rv = self.delete("/questions/1")
+        self.assertEqual(rv.status_code, 200)
+
+    def test_it_returns_a_404_status_code_when_deleting_an_non_id(self):
+        rv = self.delete("/questions/1")
+        self.assertEqual(rv.status_code, 404)

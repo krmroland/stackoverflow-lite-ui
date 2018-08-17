@@ -20,3 +20,7 @@ class QuestionsController:
         return jsonify({
             "data": Question.find_or_fail(id)
         })
+
+    def destroy(self, id):
+        Question.find_or_fail(id).delete()
+        return jsonify(dict(message="Resource was removed successfully"))

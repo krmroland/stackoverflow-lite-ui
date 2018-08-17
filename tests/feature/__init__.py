@@ -21,6 +21,9 @@ class BaseTestCase(TestCase):
     def post(self, url, json=None):
         return self.client.post(**self._make_options(url, json))
 
+    def delete(self, url):
+        return self.client.delete(**self._make_options(url))
+
     def _base_url(self, url):
         return f"/{self.url_prefix}/{self.api_version}{url}"
 
