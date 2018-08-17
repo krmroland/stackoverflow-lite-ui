@@ -153,14 +153,13 @@ class Model(Fluent):
 
     def load(self, *args):
         for key in args:
-            try:
-                relationship = getattr(self, key)()
-                if isinstance(relationship, Relationship):
-                    relationship.load()
-                else:
-                    raise Exception("{} is not a valid relationship", key)
-            except TypeError as e:
-                raise Exception("{} is not a valid relationship", key)
+            self._load_relation_ship(key)
+
+    def _load_relation_ship(self, key):
+        relationship = getattr(self, key)()
+        if isinstance(relationship, Relationship):
+            return relationship.load()
+        raise Exception(f"{key} is not a valid relationship")
 
     @classmethod
     def find(cls, id):
