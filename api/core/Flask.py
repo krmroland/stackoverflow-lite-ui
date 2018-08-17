@@ -1,9 +1,11 @@
 from flask import Flask as BaseFlask, request
+from .Request import Request
 from .routing.Router import Router
 from .JSONEncoder import JSONEncoder
 
 
 class Flask(BaseFlask):
+    request_class = Request
 
     json_encoder = JSONEncoder
 
