@@ -45,7 +45,7 @@ const config = {
 
     //destination for trans-piled files
     output: {
-        path: path.resolve(__dirname, 'ui'),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name]/app.[name]'
     },
     performance: {
@@ -98,7 +98,7 @@ const config = {
     },
 
     plugins: [
-        new CleanWebpackPlugin([path.resolve(__dirname, 'ui')]),
+        new CleanWebpackPlugin([path.resolve(__dirname, 'dist')]),
         new WebpackNotifier({
             alwaysNotify: true,
             title: 'Compilation was successful',
@@ -107,7 +107,7 @@ const config = {
         new CopyWebpackPlugin([
             {
                 from: path.resolve(__dirname, 'src/images'),
-                to: path.resolve(__dirname, 'ui/images')
+                to: path.resolve(__dirname, 'dist/images')
             }
         ]),
         new ImageminPlugin({
@@ -117,7 +117,7 @@ const config = {
 
         new HandlebarsPlugin({
             entry: path.join(__dirname, 'src', 'pages', '*.hbs'),
-            output: path.join(__dirname, 'ui', '[name].html'),
+            output: path.join(__dirname, 'dist', '[name].html'),
             partials: [path.join(__dirname, 'src', '**', '*.hbs')],
             data: path.join(__dirname, 'src/dummyData.json'),
 
@@ -139,7 +139,7 @@ if (!inProduction) {
     config.plugins.push(
         new BrowserSyncPlugin({
             port: 7000,
-            server: { baseDir: [path.resolve(__dirname, 'ui')] },
+            server: { baseDir: [path.resolve(__dirname, 'dist')] },
             open: true
         })
     );

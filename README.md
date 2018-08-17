@@ -1,3 +1,7 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/a0ff7755b693b7523265/maintainability)](https://codeclimate.com/github/krmroland/stackoverflow-lite-ui/maintainability)
+[![Build Status](https://travis-ci.org/krmroland/stackoverflow-lite-ui.svg?branch=master)](https://travis-ci.org/krmroland/stackoverflow-lite-ui)
+[![Coverage Status](https://coveralls.io/repos/github/krmroland/stackoverflow-lite-ui/badge.svg)](https://coveralls.io/github/krmroland/stackoverflow-lite-ui)
+
 # Stack overflow lite UI
 StackOverflow-lite-ui  is a platform where people can ask questions and provide answers.
 
