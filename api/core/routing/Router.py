@@ -41,11 +41,6 @@ class Router:
     @classmethod
     def register_route(cls, route):
         return cls.routes[route].rule()
-    # @classmethod
-    # def load(cls, app):
-    #     """ loads the routes into the application"""
-    #     for route in cls.routes:
-    #         app.url_map.add(cls.routes[route].rule())
 
     @classmethod
     def add(cls, verb, url, controller, method):
