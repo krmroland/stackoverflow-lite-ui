@@ -1,3 +1,3 @@
-import './links';
-import './textArea';
-import './voting';
+import "./links";
+import "./textArea";
+import "./voting";

@@ -1,52 +1,54 @@
-const path = require('path');
+const path = require("path");
 
-const glob = require('glob-all');
+const glob = require("glob-all");
 
-const PurgecssPlugin = require('purgecss-webpack-plugin');
+const PurgecssPlugin = require("purgecss-webpack-plugin");
 
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-const layouts = require('handlebars-layouts');
+const layouts = require("handlebars-layouts");
 
 //reload browsers on every change
 
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 
 //extract css from javascript modules
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 //show some notifications
 
-const WebpackNotifier = require('webpack-notifier');
+const WebpackNotifier = require("webpack-notifier");
 
 //use handlebars as template engine for building UI
-const HandlebarsPlugin = require('handlebars-webpack-plugin');
+const HandlebarsPlugin = require("handlebars-webpack-plugin");
 
-const pretty = require('pretty');
+const pretty = require("pretty");
 
-const mode = process.env.NODE_ENV || 'development';
+const mode = process.env.NODE_ENV || "development";
 
-const inProduction = mode === 'production';
+const inProduction = mode === "production";
 
 //copy assets from the src directory to the dist directory
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const ImageminPlugin = require("imagemin-webpack-plugin").default;
+
+const AutoPrefixer = require("autoprefixer");
 
 const config = {
     mode,
     //entry points
     entry: {
-        css: './src/sass/app.scss',
-        js: './src/js/app.js'
+        css: "./src/sass/app.scss",
+        js: "./src/js/app.js"
     },
 
     //destination for trans-piled files
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name]/app.[name]'
+        path: path.resolve(__dirname, "dist"),
+        filename: "[name]/app.[name]"
     },
     performance: {
         hints: false
@@ -57,35 +59,35 @@ const config = {
     module: {
         rules: [
             {
-                test: path.resolve(__dirname, 'src/js/app.js'),
-                loader: 'babel-loader'
+                test: path.resolve(__dirname, "src/js/app.js"),
+                loader: "babel-loader"
             },
             {
                 //use absolute path to speed up module resolution instead of regular expressions like test:/\.scss$/
-                test: path.resolve(__dirname, 'src/sass/app.scss'),
+                test: path.resolve(__dirname, "src/sass/app.scss"),
                 use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
+                    fallback: "style-loader",
                     use: [
                         {
-                            loader: 'css-loader'
+                            loader: "css-loader"
                         },
                         {
-                            loader: 'postcss-loader',
+                            loader: "postcss-loader",
                             options: {
-                                ident: 'postcss',
+                                ident: "postcss",
                                 plugins: [
-                                    new require('autoprefixer')({
-                                        browsers: ['>1%'],
+                                    new AutoPrefixer({
+                                        browsers: [">1%"],
                                         // dont add old flexbox spec properties for webkit
-                                        flexbox: 'no-2009'
+                                        flexbox: "no-2009"
                                     }),
-                                    require('css-mqpacker')({ sort: true })
+                                    require("css-mqpacker")({ sort: true })
                                 ]
                             }
                         },
 
                         {
-                            loader: 'sass-loader',
+                            loader: "sass-loader",
                             options: {
                                 //use 8 decimal places for all sass calculations
                                 precision: 8
@@ -98,28 +100,28 @@ const config = {
     },
 
     plugins: [
-        new CleanWebpackPlugin([path.resolve(__dirname, 'dist')]),
+        new CleanWebpackPlugin([path.resolve(__dirname, "dist")]),
         new WebpackNotifier({
             alwaysNotify: true,
-            title: 'Compilation was successful',
-            contentImage: path.resolve(__dirname, 'andela.png')
+            title: "Compilation was successful",
+            contentImage: path.resolve(__dirname, "andela.png")
         }),
         new CopyWebpackPlugin([
             {
-                from: path.resolve(__dirname, 'src/images'),
-                to: path.resolve(__dirname, 'dist/images')
+                from: path.resolve(__dirname, "src/images"),
+                to: path.resolve(__dirname, "dist/images")
             }
         ]),
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
-            disable: mode === 'development'
+            disable: mode === "development"
         }),
 
         new HandlebarsPlugin({
-            entry: path.join(__dirname, 'src', 'pages', '*.hbs'),
-            output: path.join(__dirname, 'dist', '[name].html'),
-            partials: [path.join(__dirname, 'src', '**', '*.hbs')],
-            data: path.join(__dirname, 'src/dummyData.json'),
+            entry: path.join(__dirname, "src", "pages", "*.hbs"),
+            output: path.join(__dirname, "dist", "[name].html"),
+            partials: [path.join(__dirname, "src", "**", "*.hbs")],
+            data: path.join(__dirname, "src/dummyData.json"),
 
             onBeforeSave(Handlebars, resultHtml) {
                 //prettify html
@@ -130,7 +132,7 @@ const config = {
             }
         }),
         //extract css out of the js modules
-        new ExtractTextPlugin('css/app.css')
+        new ExtractTextPlugin("css/app.css")
     ]
 };
 
@@ -139,7 +141,7 @@ if (!inProduction) {
     config.plugins.push(
         new BrowserSyncPlugin({
             port: 7000,
-            server: { baseDir: [path.resolve(__dirname, 'dist')] },
+            server: { baseDir: [path.resolve(__dirname, "dist")] },
             open: true
         })
     );
@@ -147,10 +149,10 @@ if (!inProduction) {
 
 const CleanCss = new PurgecssPlugin({
     paths: glob.sync([`./src/**/*.hbs`, `./src/js/*.js`]),
-    whitelist: ['active']
+    whitelist: ["active"]
 });
 
-if (mode === 'none') {
+if (mode === "none") {
     config.plugins.push(CleanCss);
 }
 
