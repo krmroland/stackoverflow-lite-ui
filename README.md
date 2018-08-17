@@ -1,12 +1,13 @@
 # Stack overflow lite 
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/a0ff7755b693b7523265/maintainability)](https://codeclimate.com/github/krmroland/stackoverflow-lite-ui/maintainability)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f220c8d224a4603adfc367189499c12)](https://www.codacy.com/project/krmroland/stackoverflow-lite-ui/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=krmroland/stackoverflow-lite-ui&amp;utm_campaign=Badge_Grade_Dashboard)
 
 | Service         | Master        | Develop    |
 | -------------   |-------------|----------|
 |Travis CI status | [![Build Status](https://travis-ci.org/krmroland/stackoverflow-lite-ui.svg?branch=master)](https://travis-ci.org/krmroland/stackoverflow-lite-ui)|[![Build Status](https://travis-ci.org/krmroland/stackoverflow-lite-ui.svg?branch=develop)](https://travis-ci.org/krmroland/stackoverflow-lite-ui)|
 |Coveralls|[![Coverage Status](https://coveralls.io/repos/github/krmroland/stackoverflow-lite-ui/badge.svg)](https://coveralls.io/github/krmroland/stackoverflow-lite-ui)|[![Coverage Status](https://coveralls.io/repos/github/krmroland/stackoverflow-lite-ui/badge.svg?branch=e4049139-api)](https://coveralls.io/github/krmroland/stackoverflow-lite-ui?branch=develop)|
-|codacy|[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f220c8d224a4603adfc367189499c12)](https://www.codacy.com/project/krmroland/stackoverflow-lite-ui/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=krmroland/stackoverflow-lite-ui&amp;utm_campaign=Badge_Grade_Dashboard)|[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f220c8d224a4603adfc367189499c12)](https://www.codacy.com/project/krmroland/stackoverflow-lite-ui/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=krmroland/stackoverflow-lite-ui&amp;utm_campaign=Badge_Grade_Dashboard)|
+
 
 
 StackOverflow-lite-ui  is a platform where people can ask questions and provide answers.
