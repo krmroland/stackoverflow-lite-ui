@@ -95,7 +95,7 @@ class ModelCollection:
     def first(self):
         try:
             return self.models[0]
-        except IndexError as e:
+        except IndexError:
             return None
 
     def __iter__(self):

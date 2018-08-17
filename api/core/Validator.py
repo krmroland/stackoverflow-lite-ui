@@ -18,7 +18,7 @@ class Rule:
         name = parts[0]
         try:
             param = parts[1]
-        except IndexError as e:
+        except IndexError:
             param = None
 
         return Rule(value, name, param, field)

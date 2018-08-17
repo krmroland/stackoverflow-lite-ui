@@ -148,7 +148,7 @@ if (!inProduction) {
 }
 
 const CleanCss = new PurgecssPlugin({
-    paths: glob.sync([`./src/**/*.hbs`, `./src/js/*.js`]),
+    paths: glob.sync(["./src/**/*.hbs", "./src/js/*.js"]),
     whitelist: ["active"]
 });
 

@@ -12,7 +12,7 @@ class Relationship(ABC):
         self.child_key = stack()[2][3]
 
     @abstractmethod
-    def _load_data():
+    def _load_data(self):
         raise NotImplementedError
 
     def ensure_can_persist(self):
