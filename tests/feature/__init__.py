@@ -1,5 +1,6 @@
 from unittest import TestCase
 from api.app import create_app
+from api.core.storage import Storage
 
 
 class BaseTestCase(TestCase):
@@ -9,6 +10,10 @@ class BaseTestCase(TestCase):
         self.client = self.app.test_client()
         self.url_prefix = "api"
         self.api_version = "v1.0"
+
+    def tearDown(self):
+        # have a clean storage for every test
+        Storage.clear()
 
     def get(self, url):
         return self.client.get(**self._make_options(url))

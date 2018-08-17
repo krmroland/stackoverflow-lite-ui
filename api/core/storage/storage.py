@@ -1,9 +1,14 @@
 from api.core import Utils
 from .relationships import HasMany, HasOne, Relationship
+from api.core.exceptions import ModelNotFoundException
 
 
 class Storage:
     _data = dict()
+
+    @classmethod
+    def clear(cls):
+        cls._data = dict()
 
     @classmethod
     def insert(cls, table, attributes):
@@ -143,6 +148,17 @@ class Model:
                     raise Exception("{} is not a valid relationship", key)
             except TypeError as e:
                 raise Exception("{} is not a valid relationship", key)
+
+    @classmethod
+    def find(cls, id):
+        return cls.where(id=int(id)).first()
+
+    @classmethod
+    def find_or_fail(cls, id):
+        question = cls.find(id)
+        if question:
+            return question
+        raise ModelNotFoundException(cls.table_name(), id)
 
     @classmethod
     def base_where(cls, type, *args, **kwargs):

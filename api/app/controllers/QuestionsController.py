@@ -15,3 +15,8 @@ class QuestionsController:
                 "description": "required|min_length:3|max_length:200"
             }))
         }), 201
+
+    def show(self, id):
+        return jsonify({
+            "data": Question.find_or_fail(id)
+        })

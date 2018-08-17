@@ -30,3 +30,12 @@ class TestQuestions(BaseTestCase):
         rv = self.post("/questions", {})
         data = rv.get_json()
         self.assertEqual(data["message"], "Validation Failed")
+
+    def test_it_returns_a_question_given_an_existing_id(self):
+        rv = self.post("/questions", self.question)
+        rv = self.get("/questions/1")
+        self.assertDictContainsSubset(self.question, rv.get_json()["data"])
+
+    def test_it_fails_getting_a_question_given_a_non_id(self):
+        rv = self.get("/questions/1")
+        self.assertEqual(rv.status_code, 404)
