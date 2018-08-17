@@ -49,6 +49,7 @@ class Rule:
         error = f"{self.label} must be {prefix} {length} characters"
         return self._make_error(callback(length, value_len), error)
 
+    @classmethod
     def _make_error(self, condition, message):
         if condition:
             return None

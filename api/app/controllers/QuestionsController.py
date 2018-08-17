@@ -8,28 +8,33 @@ validation_rules = {
 
 
 class QuestionsController:
-    def index(self):
+    @classmethod
+    def index(cls):
         return jsonify({
             "data": Question.all()
         })
 
-    def store(self):
+    @classmethod
+    def store(cls):
         return jsonify({
             "data": Question.create(request.validate(validation_rules))
         }), 201
 
-    def show(self, id):
+    @classmethod
+    def show(cls, id):
         return jsonify({
             "data": Question.find_or_fail(id)
         })
 
-    def update(self, id):
+    @classmethod
+    def update(cls, id):
         return jsonify({
             "data": Question.find_or_fail(id).update(
                 request.validate(validation_rules)
             )
         })
 
-    def destroy(self, id):
+    @classmethod
+    def destroy(cls, id):
         Question.find_or_fail(id).delete()
         return jsonify(dict(message="Resource was removed successfully"))
