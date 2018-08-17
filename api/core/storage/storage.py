@@ -1,4 +1,4 @@
-from api.core import Utils
+from api.core.Utils import time_now, Fluent
 from .relationships import HasMany, HasOne, Relationship
 from api.core.exceptions import ModelNotFoundException
 
@@ -105,16 +105,13 @@ class ModelCollection:
         return str(self.models)
 
 
-class Model:
+class Model(Fluent):
     timestamps = True
     hidden = []
 
     @classmethod
     def table_name(cls):
         return str(cls.__name__).lower()
-
-    def __init__(self, attributes={}):
-        self.set_attributes(attributes)
 
     @classmethod
     def create(cls, attributes):
@@ -129,7 +126,7 @@ class Model:
     def _update_timestamps(self):
         if not self.timestamps:
             return
-        now = Utils.time_now()
+        now = time_now()
         if self.created_at:
             self._update_attributes(dict(updated_at=now))
         self._update_attributes(dict(updated_at=now, created_at=now))
@@ -209,24 +206,3 @@ class Model:
     def all(cls):
         models = cls.hydrate(Storage.get_table_data(cls.table_name()).values())
         return ModelCollection(models)
-
-    def set_attributes(self, attributes):
-        object.__setattr__(self, "attributes", attributes)
-
-    def _update_attributes(self, attributes):
-        self.attributes.update(attributes)
-
-    def __getattr__(self, key):
-        return self.attributes.get(key, None)
-
-    def __getitem__(self, key):
-        return self.attributes.get(key, None)
-
-    def __setattr__(self, key, value):
-        self.attributes[key] = value
-
-    def __repr__(self):
-        return str(self.attributes)
-
-    def __setitem__(self, key, value):
-        self.attributes[key] = value
