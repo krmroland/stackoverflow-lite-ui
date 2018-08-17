@@ -14,7 +14,7 @@ class BaseTestCase(TestCase):
         return self.client.get(**self._make_options(url))
 
     def post(self, url, json=None):
-        return self.client.get(**self._make_options(url, json))
+        return self.client.post(**self._make_options(url, json))
 
     def _base_url(self, url):
         return f"/{self.url_prefix}/{self.api_version}{url}"

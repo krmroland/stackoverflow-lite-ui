@@ -1,6 +1,7 @@
 from api.core import Flask
 from api.config import config
 from api.app.routes import Router
+from api.core.error_handler import handle_errors
 
 
 def load_routes(app):
@@ -14,5 +15,7 @@ def create_app(environment):
     app.config.from_object(config[environment])
 
     load_routes(app)
+
+    handle_errors(app)
 
     return app

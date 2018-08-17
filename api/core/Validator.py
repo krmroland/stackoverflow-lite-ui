@@ -80,6 +80,8 @@ class Validator:
 
         if len(self.errors):
             raise ValidationException(self.errors)
+        # return the validated keys
+        return list(rules.keys())
 
     def _run_rule(self, rule):
         error = rule.run()

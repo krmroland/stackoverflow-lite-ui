@@ -22,4 +22,4 @@ class Request(BaseRequest):
         return self.all().get(field, default)
 
     def validate(self, rules):
-        return Validator(self.all()).validate(rules)
+        return self.get(Validator(self.all()).validate(rules))
