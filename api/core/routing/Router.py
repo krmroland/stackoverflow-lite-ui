@@ -51,7 +51,7 @@ class Router:
     def add(cls, verb, url, controller, method):
         # use the index as the name of the route
         name = str(len(cls.routes))
-        route = Route(verb, url, name, controller, method)
+        route = Route(verb, url, name).set_actions(controller, method)
         cls.routes[name] = route
         return route
 
