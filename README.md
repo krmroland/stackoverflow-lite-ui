@@ -1,0 +1,2 @@
+# stackoverflow-lite-ui
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/48002589e02240f68cdc6748593a90f4)](https://app.codacy.com/app/krmroland/stackoverflow-lite-ui?utm_source=github.com&utm_medium=referral&utm_content=krmroland/stackoverflow-lite-ui&utm_campaign=badger)
