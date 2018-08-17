@@ -3,6 +3,33 @@ from .relationships import HasMany, HasOne, Relationship
 from api.core.exceptions import ModelNotFoundException
 
 
+class Where:
+    def __init__(self, query_type, rows, filters):
+        self.query_type = query_type
+        self.rows = rows
+        self.filters = filters
+        self.results = []
+
+    def get_results(self):
+        for row in self.rows:
+            self._run_filters(row)
+        return self.results
+
+    def _run_filters(self, row):
+        # let the initial result be a True for and queries
+        passes = (self.query_type == "and")
+        for key in self.filters:
+            passes = self._run_filter(row, key, passes)
+        if passes:
+            self.results.append(row)
+
+    def _run_filter(self, row, key, prevCheck):
+        result = row.get(key, None) == self.filters[key]
+        if self.query_type == "and":
+            return prevCheck and result
+        return prevCheck or result
+
+
 class Storage:
     _data = dict()
 
@@ -47,21 +74,9 @@ class Storage:
         return False
 
     @classmethod
-    def where(cls, table, type, kwargs):
-        results = []
+    def where(cls, table, query_type, filters):
         rows = cls.get_table_data(table).values()
-
-        for row in rows:
-            # for an and where clause we start with and true value
-            passes = (type == "and")
-            for key in kwargs:
-                if type == "and":
-                    passes = passes and (row.get(key, None) == kwargs[key])
-                else:
-                    passes = passes or (row.get(key, None) == kwargs[key])
-            if passes:
-                results.append(row)
-        return results
+        return Where(query_type, rows, filters).get_results()
 
 
 class ModelCollection:
