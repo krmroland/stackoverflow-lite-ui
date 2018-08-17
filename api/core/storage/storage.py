@@ -127,6 +127,7 @@ class Model:
     def update(self, attributes):
         self._update_attributes(attributes)
         self.save()
+        return self.attributes
 
     def save(self):
         self._update_timestamps()

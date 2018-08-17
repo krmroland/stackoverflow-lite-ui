@@ -48,3 +48,12 @@ class TestQuestions(BaseTestCase):
     def test_it_returns_a_404_status_code_when_deleting_an_non_id(self):
         rv = self.delete("/questions/1")
         self.assertEqual(rv.status_code, 404)
+
+    def test_it_updates_an_existing_question(self):
+        self.post("/questions", self.question)
+        update = dict(title="Updated title", description="Updated description")
+        self.question.update(update)
+        rv = self.patch("/questions/1", update)
+        self.assertEqual(rv.status_code, 200)
+        data = rv.get_json()["data"]
+        self.assertEqual(data["title"], self.question["title"])

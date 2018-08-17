@@ -16,6 +16,7 @@ class RouteResource(RouteCollection):
             ("get", self.single_url, self.controller, "show"),
             ("post", self.all_url, self.controller, "store"),
             ("put", self.single_url, self.controller, "update"),
+            ("patch", self.single_url, self.controller, "update"),
             ("delete", self.single_url, self.controller, "destroy")
         )
 
