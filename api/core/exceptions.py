@@ -1,8 +1,11 @@
+from werkzeug.exceptions import UnprocessableEntity
+
+
 class ModelException(Exception):
     pass
 
 
-class ValidationException(Exception):
-    def __init__(self, error):
-        Exception.__init__(self, error)
-        self.errors = error
+class ValidationException(UnprocessableEntity):
+    def __init__(self, errors):
+        response = dict(message="Validation Failed", errors=errors)
+        super().__init__(response=response)
