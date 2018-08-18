@@ -71,6 +71,7 @@ While in the terminal in the `UI` directory
  3. `npm run watch` or `yarn run watch` to set up a local development server and watch all the files for changes and live reload
 
 # API
+#### This __api__ is currently hosted on [heroku](https://andela-stackoverflow.herokuapp.com/api/v1.0/)
 #### Requirements
 - [Python](https://www.python.org/) A general purpose programming language
 - [Pip](https://pypi.org/project/pip/) A tool for installing python packages
@@ -103,10 +104,10 @@ pytest pytest   -v --cov api
 | ----------------------------------------------------|------|--------------------------------------|
 |`/api/v1.0/`                                         |GET   |API index                             |
 |`/api/v1.0/questions`                                |GET   |Gets a list of Questions              |
-|`/api/v1.0/questions/<int:id>`                       |GET   |Gets a Question resource of a given ID|
 |`/api/v1.0/questions`                                |POST  |Stores a Question resource            |
-|`/api/v1.0/questions `                               |PATCH |Updates a Question resource           |
-|`/api/v1.0/questions `                               |DELETE|Deletes a Question resource           |
+|`/api/v1.0/questions/<int:id>`                       |GET   |Gets a Question resource of a given ID|
+|`/api/v1.0/questions/<int:id> `                      |PATCH |Updates a Question resource           |
+|`/api/v1.0/questions<int:id>`                        |DELETE|Deletes a Question resource           |
 |`/api/v1.0/questions/<int:id>/answers`               |GET   |Gets a answers of a specific question |
 |`/api/v1.0/questions/<int:id>/answers`               |POST  |Adds a an answer to a question        |
 |`/api/v1.0/questions/<int:id>/answers/<int:id>`      |GET   |Gets a specific answer                |
