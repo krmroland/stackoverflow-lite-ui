@@ -29,3 +29,8 @@ class AnswersController:
             }))
 
         return jsonify(dict(data=answer)), 200
+
+    @classmethod
+    def destroy(cls, question_id, answer_id):
+        Answer.by_question_id(question_id, answer_id).delete()
+        return jsonify(dict(message="Answer was successively removed")), 200

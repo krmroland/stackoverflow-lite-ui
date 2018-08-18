@@ -43,9 +43,15 @@ class TestQuestionAnswers(BaseTestCase):
         rv = self.get(self.answer_url(1))
         self.assertEqual(rv.status_code, 200)
 
-    def test_it_updates_an_existing_question(self):
+    def test_it_updates_an_existing_question_answer(self):
         self.post(self.answers_url(), dict(body="Some existing answer"))
         update = dict(body="Updated answer")
         rv = self.put(self.answer_url(1), update)
         answer = rv.get_json()["data"]
         self.assertDictContainsSubset(update, answer)
+
+    def test_it_deletes_an_existing_question(self):
+        self.post(self.answers_url(), dict(body="Some existing answer"))
+        self.delete(self.answer_url(1))
+        rv = self.get(self.answer_url(1))
+        self.assertEqual(rv.status_code, 404)
