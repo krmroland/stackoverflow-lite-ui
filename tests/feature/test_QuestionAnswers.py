@@ -37,3 +37,8 @@ class TestQuestionAnswers(BaseTestCase):
     def test_add_a_question_answer_fails_with_invalid_data(self):
         rv = self.post(self.answers_url())
         self.assertEqual(rv.status_code, 422)
+
+    def test_get_existing_question_answer_returns_a_200_response(self):
+        self.post(self.answers_url(), dict(body="Some existing answer"))
+        rv = self.get(self.answer_url(1))
+        self.assertEqual(rv.status_code, 200)
