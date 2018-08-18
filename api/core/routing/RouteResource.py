@@ -38,8 +38,8 @@ class RouteResource(RouteCollection):
         parts = str(url).split(".")
         if len(parts) == 1:
             self.all_url = parts[0]
-            self.single_url = f"{parts[0]}/<param>"
+            self.single_url = f"{parts[0]}/<int:param>"
         else:
-            self.all_url = f"{parts[0]}/<param1>/{parts[1]}"
-            self.single_url = f"{self.all_url}/<param2>"
+            self.all_url = f"{parts[0]}/<int:param1>/{parts[1]}"
+            self.single_url = f"{self.all_url}/<int:param2>"
         return self
