@@ -24,3 +24,16 @@ class TestQuestionAnswers(BaseTestCase):
     def test_it_fetches_a_list_of_all_answers(self):
         rv = self.get(self.answers_url())
         self.assertEqual(200, rv.status_code)
+
+    def test_add_a_question_answer_returns_a_201_status(self):
+        rv = self.post(self.answers_url(), dict(body="Some answer"))
+        self.assertEqual(201, rv.status_code)
+
+    def test_add_a_question_answer_passes(self):
+        answer = dict(body="Some answer")
+        rv = self.post(self.answers_url(), answer)
+        self.assertDictContainsSubset(answer, rv.get_json()["data"])
+
+    def test_add_a_question_answer_fails_with_invalid_data(self):
+        rv = self.post(self.answers_url())
+        self.assertEqual(rv.status_code, 422)
