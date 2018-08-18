@@ -98,6 +98,12 @@ class ModelCollection:
         except IndexError:
             return None
 
+    def first_or_fail(self):
+        first = self.first()
+        if first:
+            return first
+        raise ModelNotFoundException()
+
     def __iter__(self):
         return iter(self.models)
 
@@ -168,9 +174,9 @@ class Model(Fluent):
 
     @classmethod
     def find_or_fail(cls, id):
-        question = cls.find(id)
-        if question:
-            return question
+        model = cls.find(id)
+        if model:
+            return model
         raise ModelNotFoundException(cls.table_name(), id)
 
     @classmethod
