@@ -154,6 +154,7 @@ class Model(Fluent):
     def load(self, *args):
         for key in args:
             self._load_relation_ship(key)
+        return self
 
     def _load_relation_ship(self, key):
         relationship = getattr(self, key)()
@@ -191,7 +192,7 @@ class Model(Fluent):
 
     @classmethod
     def hydrate(cls, models):
-        return list(map(cls, models))
+        return [cls(model) for model in models]
 
     def to_json(self):
 
