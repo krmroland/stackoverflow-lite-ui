@@ -42,3 +42,10 @@ class TestQuestionAnswers(BaseTestCase):
         self.post(self.answers_url(), dict(body="Some existing answer"))
         rv = self.get(self.answer_url(1))
         self.assertEqual(rv.status_code, 200)
+
+    def test_it_updates_an_existing_question(self):
+        self.post(self.answers_url(), dict(body="Some existing answer"))
+        update = dict(body="Updated answer")
+        rv = self.put(self.answer_url(1), update)
+        answer = rv.get_json()["data"]
+        self.assertDictContainsSubset(update, answer)

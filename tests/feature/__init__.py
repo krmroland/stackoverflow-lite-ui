@@ -24,6 +24,9 @@ class BaseTestCase(TestCase):
     def patch(self, url, json=None):
         return self.client.patch(**self._make_options(url, json))
 
+    def put(self, url, json=None):
+        return self.client.put(**self._make_options(url, json))
+
     def delete(self, url):
         return self.client.delete(**self._make_options(url))
 
