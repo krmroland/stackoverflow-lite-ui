@@ -1,10 +1,15 @@
 language: python
 python:
-  - '3.6'
+- '3.6'
 before_script:
-  - pip3 install -r requirements.txt
+- pip3 install -r requirements.txt
 after_success:
-  - coveralls
+- coveralls
 script:
-  - pytest   -v --cov api/app --cov-report term-missing
-
+- pytest   -v --cov api/app --cov-report term-missing
+deploy:
+  provider: heroku
+  api_key:
+    secure: Eav/qEQN89dyvqBKam746FbeRAo8GQtfjicoxjev482DFHowK3BvieKiHlUzdMdZiAr38uZb2KYD39KdDV/xTMGKENL+/4ADWVywRl4EaNJd+5ufjx8zhQjElZJMpV1mnHCbVLmbE4v3XU65SbibpyjeDvcUMNKYDSjxuRAv0nsWdR/YFYt0s0hTALAGRb/q369+gWtCaX87UGxwUuMmg0uhl9Ke3ktdTStaytymNt4cToQ5V0LQopNs/lQgSb9ZQgLxhBmtjAqKVmyGQzXZc++Poyexeq1bdMA/AcuyyknmeTbYfIW9UNxUxBwCUCVQ/3qMDS4fyNAOYKlERt0agdxlOmQayEEkSgmrd6+iSTR1foena2pHcS2q6Pl9CncIygHezm/9uYPIhg1HmziNQR+peH4q278gSlDh9Z0TOT7NaBIzreTg8ZzrdmolhXEiLFLsX36OGz6HOjec4n8VOcvkDbEb0oQwU3GYTfAMpEk+XgsswSpii5pW75fmklJrr3dHvifekDpcHDhNMU9QCcU+R2LkkZpG3+8g9qsGyG7yoqveIbVO96M8gjvhORRDh7dt+/4GQ9UOkVSifa4q2rUxyXDCLXFlcvI5SwpUgcinvIjCpWRVQBEpeRMbg1Y/KugEtYMtp9AG02+ITLttTUkzmXGiqYKpgsTpgHZKpCM=
+  app: andela-stackoverflow
+  on: staging
