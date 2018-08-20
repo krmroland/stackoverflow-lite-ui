@@ -13,7 +13,7 @@ class Request(BaseRequest):
     def get(self, field, default=None):
         if isinstance(field, list):
             return {key: self._get_field(key) for key in field}
-        return self._get_field(field, default)
+        return self._get_field(field, default)  # pragma: no cover
 
     def only(self, fields):
         return self.get(fields)
@@ -22,4 +22,4 @@ class Request(BaseRequest):
         return self.all().get(field, default)
 
     def validate(self, rules):
-        return self.get(Validator(self.all()).validate(rules))
+        return self.only(Validator(self.all()).validate(rules))

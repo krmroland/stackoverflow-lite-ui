@@ -3,7 +3,7 @@ from api.core.storage import Model, ModelCollection
 
 
 class JSONEncoder(BaseJSONEncoder):
-    def default(self, data):
-        if isinstance(data, Model) or isinstance(data, ModelCollection):
-            return data.to_json()
-        return BaseJSONEncoder.default(self, data)
+    def default(self, o):
+        if isinstance(o, Model) or isinstance(o, ModelCollection):
+            return o.to_json()
+        return JSONEncoder.default(self, o)  # pragma: no cover
