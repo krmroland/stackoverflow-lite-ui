@@ -6,7 +6,8 @@ def validation_exception(e):
 
 
 def not_found_exception(e):
-    return jsonify(e.response), 404
+    response = e.response or dict(error="Resource doesn't exist")
+    return jsonify(response), 404
 
 
 def handle_errors(app):

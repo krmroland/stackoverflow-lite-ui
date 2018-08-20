@@ -98,6 +98,12 @@ class ModelCollection:
         except IndexError:
             return None
 
+    def first_or_fail(self):
+        first = self.first()
+        if first:
+            return first
+        raise ModelNotFoundException()
+
     def __iter__(self):
         return iter(self.models)
 
@@ -154,6 +160,7 @@ class Model(Fluent):
     def load(self, *args):
         for key in args:
             self._load_relation_ship(key)
+        return self
 
     def _load_relation_ship(self, key):
         relationship = getattr(self, key)()
@@ -167,9 +174,9 @@ class Model(Fluent):
 
     @classmethod
     def find_or_fail(cls, id):
-        question = cls.find(id)
-        if question:
-            return question
+        model = cls.find(id)
+        if model:
+            return model
         raise ModelNotFoundException(cls.table_name(), id)
 
     @classmethod
@@ -191,7 +198,7 @@ class Model(Fluent):
 
     @classmethod
     def hydrate(cls, models):
-        return list(map(cls, models))
+        return [cls(model) for model in models]
 
     def to_json(self):
 

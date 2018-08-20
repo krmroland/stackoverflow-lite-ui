@@ -32,6 +32,7 @@ class Relationship(ABC):
 
     def load(self):
         self.parent[self.child_key] = self._load_data()
+        return self.parent
 
 
 class HasMany(Relationship):
