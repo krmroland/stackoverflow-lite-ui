@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>partials/head title=title}}
+<body class="bg-white" id="App">
+    {{>partials/topNav}}
+    <div class="columns flex-column-reverse-md">
+        <div class="column-3 bg-dark shadow-lg" id="Sidebar">
+            {{>partials/sidebar}}
+        </div>
+        <div class="column-9  offset-3 offset-0-md" id="content">
+            <main class="px-1 px-0-md">
+                {{#block "main"}}{{/block}}
+            </main>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

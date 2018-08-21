@@ -1,0 +1,80 @@
+{{#extend "layouts/app"}}
+{{#content "main"}}
+<div class="shadow-lg p-3  border-1 border-light text-grey-dark" id="profile">
+  <div class="d-flex justify-around  flex-column-md">
+    <div>
+       <div class="d-flex align-center">
+          <img src="images/avatar.jpeg" alt="user avatar" class="border-1 border-light  w-150 w-100-md p-1 ">
+          <div class="pl-2">
+             <h3 class="text-h4-md fw-600">Ahimbisibwe Roland</h3 class="text-h4-md">
+               <p class="has-icon d-flex align-center">
+                 <i class="icon-2 mr-1">
+                   {{>icons/IconEnvelope}}        
+               </i>
+               rolandmbasa@gmail.com
+           </p>
+
+       </div>
+   </div>
+   <div class="d-flex align-center justify-between flex-wrap align-center my-3">
+      <div class="d-flex align-center flex-column">
+         <span class="fw-300 text-grey">Best Reply Awards</span>
+         <strong class="fw-900 text-h4  text-grey-dark">16</strong>
+     </div>
+
+     <div class="d-flex align-center flex-column">
+         <span class="fw-300 text-grey">Member Since</span>
+         <strong class="text-grey-dark">4 months ago</strong>
+
+     </div>
+ </div>
+
+</div>
+<div class="d-flex-md justify-between">
+  <div class="d-flex align-center flex-column">
+     <strong class="fw-900 text-h2 text-grey-dark">200</strong>
+     <span class="fw-300 text-grey">Questions Asked</span>
+ </div>
+ <div class="d-flex align-center flex-column">
+     <strong class="fw-900 text-h2 text-grey-dark">156</strong>
+     <span class="fw-300 text-grey">Answers Given</span>
+ </div>
+</div>
+</div>
+<div class="d-flex justify-between align-center flex-wrap">
+    <h4 class="px-1">Questions</h4> 
+    <div class="d-flex">
+        <a href="index.html#mine" class="has-icon d-flex align-center">
+            <i class="fill-accent">
+                {{>icons/IconTag}}
+                Recent
+            </i>
+        </a>
+        <a href="index.html#trending" class="has-icon d-flex align-center pl-2">
+            <i class="fill-accent">
+                {{>icons/IconTrending}}
+                Most Answered
+            </i>
+        </a>
+    </div>  
+</div>
+
+<table class="table">
+   <thead>
+       <th>Title</th>
+       <th>Views</th>
+       <th>Answers</th>
+   </thead>
+   <tbody>
+       {{#each questions}}
+       <tr>
+        <td> <a href="answers.html">{{this.title}}</a> <small class="fw-600">{{this.date}}</small></td>
+        <td>200</td>
+        <td>300</td>
+    </tr>
+    {{/each}}
+</tbody>
+</table>
+</div>
+{{/content}}
+{{/extend}}

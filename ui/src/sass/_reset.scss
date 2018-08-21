@@ -1,0 +1,59 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html {
+    line-height: 1.45;
+    font-size: 1.25rem;
+}
+
+body {
+    margin: 0;
+    font-family: $font-sans-serif;
+    font-weight: 400;
+    background-color: $white;
+    color: $black;
+}
+
+b,
+strong {
+    font-weight: bolder;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.25;
+    margin: 0;
+}
+
+svg {
+    fill: currentColor;
+}
+a {
+    text-decoration: none;
+    color: $primary;
+    &:hover {
+        text-decoration: underline;
+        font-weight: 600;
+    }
+}
+hr {
+    border-color: $grey;
+    color: $grey;
+    background-color: $grey;
+    opacity: 0.1;
+    margin-top: 1em;
+}
+@media (max-width: $breakpoint-sm) {
+    html {
+        line-height: 1.25;
+        font-size: 1.125rem;
+    }
+}

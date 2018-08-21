@@ -1,0 +1,20 @@
+@include responsive(d-block) {
+    display: block;
+}
+
+@include responsive(d-none) {
+    display: none;
+}
+@each $position in (relative, fixed) {
+    .#{$position} {
+        position: $position !important;
+    }
+}
+
+@for $i from 0 through 5 {
+    @each $side in (top, right, bottom, left) {
+        .#{$side}-#{$i} {
+            #{$side}: $i;
+        }
+    }
+}

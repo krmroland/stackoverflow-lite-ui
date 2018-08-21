@@ -1,0 +1,56 @@
+{{#extend "layouts/app"}}
+{{#content "main"}}
+<div class="columns mt-2 mt-1-md" id="Questions">
+    <div class="column-9 px-2">
+        {{#each questions}}
+            {{>questions/question question=this}}
+        {{/each}}
+    </div>
+    <div class="column-3 px-1 py-3 px-0-md mt-0 mt-2-md shadow-lg ">
+        <div class="border-t-1 border-b-1 border-primary">
+            <a class="btn btn-primary btn-block" href="newQuestion.html">
+              {{>icons/IconPlus}}
+                New Question
+            </a>
+        </div>
+    
+        <h5 class="text-grey fw-900 text-center">CHOOSE A FILTER</h5>
+        <nav class="mt-2 question-filters mt-2" >
+            <a href="#trending" class="question-filter">
+                <i class="question-filter-icon">
+                    {{>icons/IconTrending}}
+                </i>
+               <span class="question-filter-text">Trending</span>
+            </a>
+            <a href="#all" class="question-filter">
+                <i class="question-filter-icon">
+                    {{>icons/IconGlobe}}
+                </i>
+               <span class="question-filter-text"> All Questions</span>
+            </a>
+            <a href="#mine" class="question-filter">
+                <i class="question-filter-icon">
+                    {{>icons/IconLink}}
+                </i>
+               <span class="question-filter-text"> My Questions</span>
+            </a>
+            <a href="#participation" class="question-filter">
+                <i class="question-filter-icon">
+                    {{>icons/IconTag}}
+                </i>
+               <span class="question-filter-text"> My Participation</span>
+            </a>
+
+            <a href="#mostAnswered" class="question-filter">
+                <i class="question-filter-icon">
+                    {{>icons/IconView}}
+                </i>
+               <span class="question-filter-text"> Most answered</span>
+            </a>
+            
+          
+        </nav>
+    </div>
+</div>
+{{/content}}
+{{/extend}}

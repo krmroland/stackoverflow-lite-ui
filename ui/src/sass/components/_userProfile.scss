@@ -1,0 +1,33 @@
+#profile {
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1rem;
+        color: $grey-dark;
+        overflow-x: auto;
+        border: 1px solid $grey;
+        th,
+        td {
+            text-align: left;
+            padding: 0.15em 0.5em;
+        }
+        th {
+            &:not(:first-child) {
+                text-align: right;
+            }
+        }
+        td {
+        }
+
+        td {
+            border-top: 1px solid $grey;
+            border-bottom: 1px solid $grey;
+            &:not(:first-child) {
+                text-align: right;
+                font-weight: 600;
+                font-family: $font-serif;
+                font-size: 1.25rem;
+            }
+        }
+    }
+}

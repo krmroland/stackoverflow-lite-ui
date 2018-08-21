@@ -1,0 +1,46 @@
+#App {
+    #content {
+        padding-top: 75px;
+    }
+}
+.js-vote-button {
+    background: none;
+    color: $grey-dark;
+    padding: 0.2em 0.5em;
+    svg {
+        fill: none;
+        stroke: $accent-light;
+    }
+    span {
+        font-weight: 600;
+    }
+    &:active,
+    &.active,
+    &:hover,
+    &:focus {
+        color: $accent-dark;
+        border: 1px solid $accent-dark;
+        border-radius: 0.25em;
+        svg {
+            fill: $accent-dark;
+        }
+    }
+    &.active {
+        border: none;
+    }
+}
+.btn-voted-active {
+    svg {
+        fill: $accent-light;
+    }
+    color: $accent;
+    span {
+        font-weight: 600;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+        background: none;
+        border: 1px solid $accent;
+    }
+}
