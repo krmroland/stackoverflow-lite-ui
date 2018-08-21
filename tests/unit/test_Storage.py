@@ -1,7 +1,7 @@
 from unittest import TestCase
 from collections import Iterable
 from api.core.storage import Model, Storage
-from api.core.exceptions import ModelException
+from api.core.exceptions import ModelException, ModelNotFoundException
 
 
 class Contact(Model):
@@ -136,3 +136,10 @@ class TestStorage(TestCase):
     def test_model_collection_is_iterable(self):
         User.create(self.attributes)
         self.assertIsInstance(iter(User.all()), Iterable)
+
+    def test_it_first_or_fail_fails(self):
+        self.assertRaises(ModelNotFoundException, User.all().first_or_fail)
+
+    def test_it_first_or_fail_passes(self):
+        User.create(self.attributes)
+        self.assertEqual(1, len(User.all()))
