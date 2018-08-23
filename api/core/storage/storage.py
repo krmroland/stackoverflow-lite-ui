@@ -1,132 +1,31 @@
 from api.core.Utils import time_now, Fluent
 from .relationships import HasMany, HasOne, Relationship
-from api.core.exceptions import ModelNotFoundException
+from api.core.db.query import DB
 
 
-class Where:
-    def __init__(self, query_type, rows, filters):
-        self.query_type = query_type
-        self.rows = rows
-        self.filters = filters
-        self.results = []
-
-    def get_results(self):
-        for row in self.rows:
-            self._run_filters(row)
-        return self.results
-
-    def _run_filters(self, row):
-        # let the initial result be a True for and queries
-        passes = (self.query_type == "and")
-        for key in self.filters:
-            passes = self._run_filter(row, key, passes)
-        if passes:
-            self.results.append(row)
-
-    def _run_filter(self, row, key, prevCheck):
-        result = row.get(key, None) == self.filters[key]
-        if self.query_type == "and":
-            return prevCheck and result
-        return prevCheck or result
-
-
-class Storage:
-    _data = dict()
-
-    @classmethod
-    def clear(cls):
-        cls._data = dict()
-
-    @classmethod
-    def insert(cls, table, attributes):
-        existing = cls.get_table_data(table)
-        new_id = len(existing) + 1
-        attributes["id"] = new_id
-        existing[new_id] = attributes
-        cls._data[table] = existing
-
-        return attributes
-
-    @classmethod
-    def update_or_create(cls, table, attributes):
-        if "id" not in attributes:
-            return cls.insert(table, attributes)
-        existing = cls.get_table_data(table)
-        id = attributes["id"]
-        if id in existing:
-            cls._data[table][id].update(attributes)
-            return True
-        return False
-
-    @classmethod
-    def get_table_data(cls, table):
-        if table not in cls._data:
-            cls._data[table] = {}
-        return cls._data[table]
-
-    @classmethod
-    def remove(cls, table, id):
-        existing = cls.get_table_data(table)
-        if id in existing:
-            del existing[id]
-            cls._data[table] = existing
-            return True
-        return False
-
-    @classmethod
-    def where(cls, table, query_type, filters):
-        rows = cls.get_table_data(table).values()
-        return Where(query_type, rows, filters).get_results()
-
-
-class ModelCollection:
-    def __init__(self, models=[]):
-        self.models = models
-
-    def count(self):
-        return len(self.models)
-
-    def __len__(self):
-        return self.count()
-
-    def to_json(self):
-        return [model.to_json() for model in self.models]
-
-    def first(self):
-        try:
-            return self.models[0]
-        except IndexError:
-            return None
-
-    def first_or_fail(self):
-        first = self.first()
-        if first:
-            return first
-        raise ModelNotFoundException()
-
-    def __iter__(self):
-        return iter(self.models)
-
-    def __repr__(self):
-        return str(self.models)
-
-
-class Model(Fluent):
+class Model:
     timestamps = True
     hidden = []
+
+    def __init__(self, attributes={}):
+        self.attributes = Fluent()
+        self.is_persisted = False
 
     @classmethod
     def table_name(cls):
         return str(cls.__name__).lower()
 
     @classmethod
+    def query(cls):
+        return DB.table(cls.table_name())
+
+    @classmethod
     def create(cls, attributes):
         # add timestamps
         model = cls(attributes)
         model._update_timestamps()
-        model.set_attributes(
-            Storage.insert(model.table_name(), model.attributes)
-        )
+        model.attributes.update(id=cls.builder.insert(model.attributes))
+        model.is_persisted = True
         return model
 
     def _update_timestamps(self):
@@ -134,22 +33,24 @@ class Model(Fluent):
             return
         now = time_now()
         if self.created_at:
-            self._update_attributes(dict(updated_at=now))
-        self._update_attributes(dict(updated_at=now, created_at=now))
+            self.attributes.update(dict(updated_at=now))
+        self.attributes.update(dict(updated_at=now, created_at=now))
 
     def delete(self):
         if(not self.id):
             return False
-        return Storage.remove(self.table_name(), self.id)
+        return self.builder().where(id=self.id).delete()
 
     def update(self, attributes):
-        self._update_attributes(attributes)
-        self.save()
-        return self.attributes
+        self.attributes(attributes)
+        return self.save()
 
     def save(self):
         self._update_timestamps()
-        return Storage.update_or_create(self.table_name(), self.attributes)
+        if self.is_persisted:
+            self.builder().where(id=self.id).update(self.attributes)
+            return self.attributes
+        return self.create(self.attributes)
 
     def has_one(self, child, parent_id="id", child_id=None):
         return HasOne(self, child, parent_id, child_id)
@@ -170,31 +71,15 @@ class Model(Fluent):
 
     @classmethod
     def find(cls, id):
-        return cls.where(id=int(id)).first()
+        return cls.builder.find(id)
 
     @classmethod
     def find_or_fail(cls, id):
-        model = cls.find(id)
-        if model:
-            return model
-        raise ModelNotFoundException(cls.table_name(), id)
+        return cls.builder().find_or_fail(id)
 
     @classmethod
-    def base_where(cls, type, *args, **kwargs):
-        filters = kwargs
-        if len(args) == 1 and isinstance(args[0], dict):
-            filters = args[0]
-
-        models = cls.hydrate(Storage.where(cls.table_name(), type, filters))
-        return ModelCollection(models)
-
-    @classmethod
-    def where(cls, *args, **kwargs):
-        return cls.base_where("and", *args, **kwargs)
-
-    @classmethod
-    def or_where(cls, *args, **kwargs):
-        return cls.base_where("or", *args, **kwargs)
+    def where(cls, ** kwargs):
+        return cls.builder().where(**kwargs)
 
     @classmethod
     def hydrate(cls, models):
@@ -210,5 +95,4 @@ class Model(Fluent):
 
     @classmethod
     def all(cls):
-        models = cls.hydrate(Storage.get_table_data(cls.table_name()).values())
-        return ModelCollection(models)
+        return cls.builder().get()
