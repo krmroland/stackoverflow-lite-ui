@@ -1,15 +1,20 @@
-from api.core.Utils import time_now, Fluent
+from api.core.Utils import time_now
 from .relationships import HasMany, HasOne, Relationship
 from api.core.db.query import DB
+from .collections import ModelCollection
 
 
 class Model:
     timestamps = True
+
     hidden = []
 
     def __init__(self, attributes={}):
-        self.attributes = Fluent()
+        self.attributes = attributes
         self.is_persisted = False
+
+    def id(self):
+        return self.attributes.get("id", None)
 
     @classmethod
     def table_name(cls):
@@ -21,35 +26,33 @@ class Model:
 
     @classmethod
     def create(cls, attributes):
-        # add timestamps
-        model = cls(attributes)
-        model._update_timestamps()
-        model.attributes.update(id=cls.builder.insert(model.attributes))
-        model.is_persisted = True
-        return model
+        cls._update_timestamps(attributes)
+        cls.query().insert(attributes)
+        return cls(attributes)
 
-    def _update_timestamps(self):
-        if not self.timestamps:
+    @classmethod
+    def _update_timestamps(cls, attributes):
+        if not cls.timestamps:
             return
         now = time_now()
-        if self.created_at:
-            self.attributes.update(dict(updated_at=now))
-        self.attributes.update(dict(updated_at=now, created_at=now))
+        if attributes.get("created_at", None):
+            return attributes.update(dict(updated_at=now))
+        attributes.update(dict(updated_at=now, created_at=now))
 
     def delete(self):
-        if(not self.id):
+        if(not self.id()):
             return False
-        return self.builder().where(id=self.id).delete()
+        return self.query().where({"id": self.id()}).delete()
 
     def update(self, attributes):
-        self.attributes(attributes)
+        self.attributes.update(attributes)
         return self.save()
 
     def save(self):
-        self._update_timestamps()
-        if self.is_persisted:
-            self.builder().where(id=self.id).update(self.attributes)
-            return self.attributes
+        self._update_timestamps(self.attributes)
+        if self.id():
+            self.query().where({"id": self.id()}).update(self.attributes)
+            return self
         return self.create(self.attributes)
 
     def has_one(self, child, parent_id="id", child_id=None):
@@ -71,15 +74,15 @@ class Model:
 
     @classmethod
     def find(cls, id):
-        return cls.builder.find(id)
+        return cls.query.find(id)
 
     @classmethod
     def find_or_fail(cls, id):
-        return cls.builder().find_or_fail(id)
+        return cls(cls.query().find_or_fail(id))
 
     @classmethod
     def where(cls, ** kwargs):
-        return cls.builder().where(**kwargs)
+        return cls.query().where(**kwargs)
 
     @classmethod
     def hydrate(cls, models):
@@ -95,4 +98,10 @@ class Model:
 
     @classmethod
     def all(cls):
-        return cls.builder().get()
+
+        models = [cls(record) for record in cls.query().all()]
+
+        return ModelCollection(models)
+
+    def __repr__(self):
+        return str(self.attributes)

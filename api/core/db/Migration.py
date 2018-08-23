@@ -40,6 +40,8 @@ class DataTypeCompiler:
         type = self.attributes.type
         if type == "string":
             return f"VARCHAR ({self.attributes.length})"
+        if type == "timestamp":
+            return "timestamp without time zone"
         return type.upper()
 
     def compile_attributes(self):
@@ -49,7 +51,7 @@ class DataTypeCompiler:
         if self.attributes.is_primary:
             self.compiled.append("PRIMARY KEY")
 
-        if self.attributes.nullabe:
+        if self.attributes.nullable:
             self.compiled.append("NULL")
         else:
             self.compiled.append("NOT NULL")
@@ -63,20 +65,15 @@ class DataType:
                 name=name,
                 length=length,
                 nullable=False,
-                is_serial=False,
                 is_primary=False
             )
         )
-
-    def increments(self):
-        self.attributes.update(dict(is_serial=True, is_primary=True))
-        return self
 
     def compile(self):
         return DataTypeCompiler(self).compile()
 
     def __getattr__(self, key):
-        def _method(value=None):
+        def _method(value=True):
             self.attributes[key] = value
             return self
         return _method
@@ -110,14 +107,14 @@ class TableSchema:
         return self.add_field(DataType(name, length).type("text"))
 
     def timestamps(self):
-        self.timetsamp("created_at")
-        self.timetsamp("updated_at")
+        self.timetsamp("created_at").nullable()
+        self.timetsamp("updated_at").nullable()
 
     def timetsamp(self, name):
-        self.add_field(DataType(name).type("timestamp"))
+        return self.add_field(DataType(name).type("timestamp"))
 
     def increments(self, name):
-        return self.integer(name, 250)
+        return self.add_field(DataType(name).type("Serial"))
 
     @classmethod
     def drop_if_exists(cls, table):
