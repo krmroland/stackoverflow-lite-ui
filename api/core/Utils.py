@@ -9,11 +9,11 @@ class Fluent:
     def __init__(self, attributes={}):
         self.set_attributes(attributes)
 
+    def update(self, attributes):
+        self.attributes.update(attributes)
+
     def set_attributes(self, attributes):
         object.__setattr__(self, "attributes", attributes)
-
-    def _update_attributes(self, attributes):
-        self.attributes.update(attributes)
 
     def __getattr__(self, key):
         return self.attributes.get(key, None)
