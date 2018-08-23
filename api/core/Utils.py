@@ -2,7 +2,8 @@ from datetime import datetime
 
 
 def time_now():
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.now()
+    # return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 
 class Fluent:
@@ -11,6 +12,9 @@ class Fluent:
 
     def update(self, attributes):
         self.attributes.update(attributes)
+
+    def values(self):
+        return self.attributes.values()
 
     def set_attributes(self, attributes):
         object.__setattr__(self, "attributes", attributes)
@@ -29,3 +33,6 @@ class Fluent:
 
     def __setitem__(self, key, value):
         self.attributes[key] = value
+
+    def __iter__(self):
+        return iter(self.attributes)

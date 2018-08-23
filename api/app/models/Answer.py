@@ -1,4 +1,4 @@
-from api.core.storage import Model
+from api.core.models import Model
 
 
 class Answer(Model):
