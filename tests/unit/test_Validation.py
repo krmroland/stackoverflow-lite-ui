@@ -45,5 +45,29 @@ class TestValidation(TestCase):
         validator.validate({"name": "max_length:10"})
         self.assertNotIn("name", validator.errors)
 
+    def test_validate_email_fails(self):
+        validator = Validator(dict(email="some_invald_email"))
+        self.assert_fails(validator, {"email": "email"})
+        self.assertIn("email", validator.errors)
+
+    def test_validate_email_passes(self):
+        validator = Validator(dict(email="someone@andela.com"))
+        validator.validate({"email": "email"})
+        self.assertNotIn("email", validator.errors)
+
+    def test_validate_confirmed_fails(self):
+        validator = Validator(
+            dict(password="secret", password_confirmation="password")
+        )
+        self.assert_fails(validator, {"password": "confirmed"})
+        self.assertIn("password", validator.errors)
+
+    def test_validate_confirmed_passed(self):
+        validator = Validator(
+            dict(password="secret", password_confirmation="secret")
+        )
+        validator.validate({"password": "confirmed"})
+        self.assertNotIn("password", validator.errors)
+
     def assert_fails(self, validator, data):
         self.assertRaises(ValidationException, validator.validate, data)
