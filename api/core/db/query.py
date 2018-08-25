@@ -1,4 +1,4 @@
-from flask import abort
+from api.core.exceptions import ModelNotFoundException
 from . import Connect
 
 
@@ -163,7 +163,7 @@ class DB:
     def _result_or_fail(cls, result):
         if result:
             return result
-        return abort(404)
+        raise ModelNotFoundException()
 
     def _dictify(self, result):
         if not result:
