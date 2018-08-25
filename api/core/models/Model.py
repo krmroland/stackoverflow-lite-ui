@@ -4,7 +4,12 @@ from .relationships import HasMany, HasOne, Relationship
 from .collections import ModelCollection
 
 
-class Model:
+class ModelEvents:
+    def _creating(self):
+        pass
+
+
+class Model(ModelEvents):
     timestamps = True
 
     hidden = []
@@ -20,7 +25,7 @@ class Model:
 
     @classmethod
     def table_name(cls):
-        return cls._model_name()
+        return cls._model_name()  # pragma: no cover
 
     @classmethod
     def _model_name(cls):
@@ -33,8 +38,10 @@ class Model:
     @classmethod
     def create(cls, attributes):
         cls._update_timestamps(attributes)
+        model = cls(attributes)
+        model._creating()
         cls.query().insert(attributes)
-        return cls(attributes)
+        return model
 
     @classmethod
     def _update_timestamps(cls, attributes):
