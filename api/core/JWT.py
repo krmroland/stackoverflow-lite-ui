@@ -1,26 +1,19 @@
+from datetime import datetime, timedelta
+
 import jwt
 from flask import current_app
-from datetime import datetime, timedelta
 
 
 class JWT:
-    _secret = None
+    def __init__(self, algorithm="HS256"):
+        self.secret = current_app.config.get("SECRET")
+        self.expires = datetime.utcnow() + timedelta(seconds=30)
+        self.algorithm = algorithm
 
-    @classmethod
-    def generate_token(cls, email):
-        expires = datetime.utcnow() + timedelta(seconds=30)
-
+    def generate_token(self, email):
         token = jwt.encode(
-            {'email': email, 'exp': expires},
-            cls._get_secret(),
-            algorithm='HS256',
-
+            {'email': email, 'exp': self.expires},
+            self.secret,
+            self.algorithm
         )
-
         return {"token": token.decode("UTF-8")}
-
-    @classmethod
-    def _get_secret(cls):
-        if not cls._secret:
-            cls._secret = current_app.config.get("SECRET")
-        return cls._secret
