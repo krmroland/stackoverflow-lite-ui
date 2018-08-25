@@ -76,6 +76,7 @@ While in the terminal in the `UI` directory
 - [Python](https://www.python.org/) A general purpose programming language
 - [Pip](https://pypi.org/project/pip/) A tool for installing python packages
 - [Virtualenv](https://virtualenv.pypa.io/en/stable/)  A tool to create isolated Python environments
+- [Postgresql](https://www.postgresql.org/) An open  source relational database
 
 #### Development setup
 - Create a virtual environment and activate it
@@ -87,17 +88,34 @@ While in the terminal in the `UI` directory
     ```bash
     pip3 install requirements.txt
     ```
-- Run the application
-    ```bash
-    export FLASK_ENV=development
-    python run.py
-    ```
+- Setup database
+  - Ensure that [Postgresql](https://www.postgresql.org/) is installed 
+  - Create two databases named;
+     - `testing_stackoverflow` for the test environment
+     -  `stackoverflow` for other environments
+
+__Note__: You  can change the names of the above mentioned databases, just make sure you head to `api/config.py` and update the key `DB_NAME` for both environments when you do.
+
+#### Run the database migrations
+```bash
+    #export the flask application in order to locate the migrate:fresh command
+    export FLASK_APP=run.py
+    flask migrate:fresh
+``` 
+
+
+
+#### Run the application
+```bash
+export FLASK_ENV=development
+python run.py
+```
 
 #### Running tests
 ```bash
 pytest
 #with coverage
-pytest pytest   -v --cov api
+pytest pytest   -v --cov api/app
 ```
 #### API REST End Points
 | End Point                                           | Verb |Use                                   |
@@ -116,6 +134,7 @@ pytest pytest   -v --cov api
 
 #### Built With
 - [Flask](http://flask.pocoo.org/) A microframework for Python based on Werkzeug, Jinja 2 
+
 
 ## Acknowledgments
  A Special thanks goes to 

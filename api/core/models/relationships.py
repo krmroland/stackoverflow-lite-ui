@@ -8,7 +8,9 @@ class Relationship(ABC):
         self.parent = parent
         self.child = child
         self.parent_id = parent_id
-        self.child_id = child_id or "{}_id".format(parent.table_name())
+        if not child_id:
+            child_id = "{}_id".format(parent._model_name())
+        self.child_id = child_id
         self.child_key = stack()[2][3]
 
     @abstractmethod
@@ -18,26 +20,26 @@ class Relationship(ABC):
     def ensure_can_persist(self):
         pass
 
-    def create(self, attributes={}):
+    def create(self, attributes):
         self.ensure_can_persist()
-        attributes[self.child_id] = self.parent[self.parent_id]
+        attributes[self.child_id] = self.parent.attributes[self.parent_id]
         model = self.child(attributes)
         model.save()
         return model
 
     def children(self):
         return self.child.where({
-            self.child_id: self.parent[self.parent_id]
+            self.child_id: self.parent.attributes[self.parent_id]
         })
 
     def load(self):
-        self.parent[self.child_key] = self._load_data()
+        self.parent.attributes[self.child_key] = self._load_data()
         return self.parent
 
 
 class HasMany(Relationship):
     def _load_data(self):
-        return self.children()
+        return self.children().get()
 
 
 class HasOne(Relationship):

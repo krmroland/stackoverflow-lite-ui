@@ -1,8 +1,11 @@
 language: python
 python:
 - '3.6'
+services:
+- postgresql
 before_script:
 - pip3 install -r requirements.txt
+- psql -c 'create database testing_stackoverflow;' -U postgres
 after_success:
 - coveralls
 script:
@@ -15,3 +18,4 @@ deploy:
     staging: andela-stackoverflow
     release-v1.0.0: andela-stackoverflow-v1
 
+  

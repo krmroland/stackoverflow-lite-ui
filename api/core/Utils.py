@@ -2,18 +2,22 @@ from datetime import datetime
 
 
 def time_now():
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.now()
+    # return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 
 class Fluent:
     def __init__(self, attributes={}):
         self.set_attributes(attributes)
 
+    def update(self, attributes):
+        self.attributes.update(attributes)
+
+    def values(self):
+        return self.attributes.values()
+
     def set_attributes(self, attributes):
         object.__setattr__(self, "attributes", attributes)
-
-    def _update_attributes(self, attributes):
-        self.attributes.update(attributes)
 
     def __getattr__(self, key):
         return self.attributes.get(key, None)
@@ -29,3 +33,6 @@ class Fluent:
 
     def __setitem__(self, key, value):
         self.attributes[key] = value
+
+    def __iter__(self):
+        return iter(self.attributes)
