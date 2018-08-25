@@ -138,6 +138,7 @@ class Migration:
     @classmethod
     def get_all_tables_sql(cls):
         if not cls._compiled_sql:
-            [Table.compile_sql() for Table in TableSchema._defined_tables]
+            for Table in TableSchema._defined_tables:
+                Table.compile_sql()
             cls._compiled_sql = TableSchema._global_commands
         return cls._compiled_sql

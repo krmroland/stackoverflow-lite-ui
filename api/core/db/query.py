@@ -57,6 +57,7 @@ class DB:
             return self._dictify_all()
         except Exception as e:
             self.connection.rollback()
+            raise e
 
     def insert(self, data):
         columns = ",".join([key for key in data])
