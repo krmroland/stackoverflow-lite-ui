@@ -12,6 +12,7 @@ class AuthController:
         })
         return jsonify(dict(data=User.create(data))), 201
 
+    @classmethod
     def login(cls):
         data = request.validate({
             "email": "required|email",
