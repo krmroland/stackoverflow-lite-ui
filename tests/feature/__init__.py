@@ -10,9 +10,11 @@ class BaseTestCase(TestCase):
         self.client = self.app.test_client()
         self.url_prefix = "api"
         self.api_version = "v1.0"
+        with self.app.app_context():
+            migrate()
 
     def tearDown(self):
-        migrate()
+        pass
 
     def get(self, url):
         return self.client.get(**self._make_options(url))

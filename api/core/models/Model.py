@@ -1,6 +1,6 @@
 from api.core.Utils import time_now
-from .relationships import HasMany, HasOne, Relationship
 from api.core.db.query import DB
+from .relationships import HasMany, HasOne, Relationship
 from .collections import ModelCollection
 
 
@@ -9,7 +9,9 @@ class Model:
 
     hidden = []
 
-    def __init__(self, attributes={}):
+    def __init__(self, attributes=None):
+        if not attributes:
+            attributes = {}
         self.attributes = attributes
         self.is_persisted = False
 
@@ -18,6 +20,10 @@ class Model:
 
     @classmethod
     def table_name(cls):
+        return cls._model_name()
+
+    @classmethod
+    def _model_name(cls):
         return str(cls.__name__).lower()
 
     @classmethod
@@ -33,14 +39,14 @@ class Model:
     @classmethod
     def _update_timestamps(cls, attributes):
         if not cls.timestamps:
-            return
+            return attributes
         now = time_now()
         if attributes.get("created_at", None):
             return attributes.update(dict(updated_at=now))
-        attributes.update(dict(updated_at=now, created_at=now))
+        return attributes.update(dict(updated_at=now, created_at=now))
 
     def delete(self):
-        if(not self.id()):
+        if not self.id():
             return False
         return self.query().where({"id": self.id()}).delete()
 
@@ -74,15 +80,15 @@ class Model:
 
     @classmethod
     def find(cls, id):
-        return cls.query.find(id)
+        return cls.query().find(id)
 
     @classmethod
     def find_or_fail(cls, id):
         return cls(cls.query().find_or_fail(id))
 
     @classmethod
-    def where(cls, ** kwargs):
-        return cls.query().where(**kwargs)
+    def where(cls, *args, **kwargs):
+        return cls.query().where(*args, **kwargs)
 
     @classmethod
     def hydrate(cls, models):
@@ -105,3 +111,6 @@ class Model:
 
     def __repr__(self):
         return str(self.attributes)
+
+    def __getitem__(self, key):
+        return self.attributes.get(key)

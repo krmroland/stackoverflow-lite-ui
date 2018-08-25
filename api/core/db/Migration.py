@@ -1,29 +1,4 @@
-
-
-class Fluent:
-    def __init__(self, attributes={}):
-        self.set_attributes(attributes)
-
-    def set_attributes(self, attributes):
-        object.__setattr__(self, "attributes", attributes)
-
-    def _update_attributes(self, attributes):
-        self.attributes.update(attributes)
-
-    def __getattr__(self, key):
-        return self.attributes.get(key, None)
-
-    def __getitem__(self, key):
-        return self.attributes.get(key, None)
-
-    def __setattr__(self, key, value):
-        self.attributes[key] = value
-
-    def __repr__(self):
-        return str(self.attributes)
-
-    def __setitem__(self, key, value):
-        self.attributes[key] = value
+from api.core.Utils import Fluent
 
 
 class DataTypeCompiler:
@@ -131,9 +106,12 @@ class TableSchema:
 
 class Migration:
     _defined_migrations = []
+    _compiled_sql = None
 
     def __init__(self):
         self._defined_migrations.append(self)
+        self._has_run_down = False
+        self._has_run_up = False
 
     def up(self):
         raise NotImplementedError()
@@ -141,11 +119,25 @@ class Migration:
     def down(self):
         raise NotImplementedError()
 
+    def _run_down(self):
+        if self._has_run_down:
+            return
+        self.down()
+        self._has_run_down = True
+
+    def _run_up(self):
+        if self._has_run_up:
+            return
+        self.up()
+        self._has_run_up = True
+
     @classmethod
     def defined_migrations(cls):
         return cls._defined_migrations
 
     @classmethod
     def get_all_tables_sql(cls):
-        [Table.compile_sql() for Table in TableSchema._defined_tables]
-        return TableSchema._global_commands
+        if not cls._compiled_sql:
+            [Table.compile_sql() for Table in TableSchema._defined_tables]
+            cls._compiled_sql = TableSchema._global_commands
+        return cls._compiled_sql

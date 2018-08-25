@@ -10,7 +10,7 @@ class AnswersController:
 
     @classmethod
     def show(cls, question_id, answer_id):
-        answer = Answer.by_question_id(question_id, answer_id)
+        answer = Answer.by_question_id(question_id, answer_id).first_or_fail()
         return jsonify(dict(data=answer)), 200
 
     @classmethod
@@ -23,7 +23,7 @@ class AnswersController:
 
     @classmethod
     def update(cls, question_id, answer_id):
-        answer = Answer.by_question_id(question_id, answer_id).update(
+        answer = Answer.find_or_fail(answer_id).update(
             request.validate({
                 "body": "required"
             }))

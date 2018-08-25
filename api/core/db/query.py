@@ -1,5 +1,5 @@
-from . import Connect
 from flask import abort
+from . import Connect
 
 
 class DB:
@@ -28,21 +28,26 @@ class DB:
     def table(cls, table):
         return DB(table)
 
-    def base_where(self, query_type, filters):
-        if len(filters) == 0:
+    def base_where(self, query_type, args, kwargs):
+        if (len(args) == 1):
+            filters = args[0]
+        else:
+            filters = kwargs
+
+        if not filters:
             return self
 
         self._wheres = "WHERE {}".format(
-            f"{query_type}".join([f"{key}=%s" for key in filters])
+            f" {query_type} ".join([f"{key}=%s" for key in filters])
         )
         self._where_bindings = list(filters.values())
         return self
 
-    def where(self, filters):
-        return self.base_where("and", filters)
+    def where(self, *args, **kwargs):
+        return self.base_where("and", args, kwargs)
 
-    def or_where(self, filters):
-        return self.base_where("or", filters)
+    def or_where(self, *args, **kwargs):
+        return self.base_where("or", args, kwargs)
 
     def get(self):
         sql = f"SELECT * from {self.table_name}  {self._wheres}"
@@ -69,7 +74,7 @@ class DB:
             raise e
 
     def delete(self):
-        if len(self._where_bindings) == 0:
+        if not self._where_bindings:
             return False
         sql = f"DELETE  from {self.table_name}  {self._wheres}"
 
@@ -78,14 +83,12 @@ class DB:
             return self.connection.commit()
         except Exception as e:
             self.connection.rollback()
+            raise e
 
     def update(self, data):
-        if len(self._where_bindings) == 0:
+        if not self._where_bindings:
             return False
-        data = {**data}
-        del data["id"]
         holders = ",".join([f"{key}= %s" for key in data])
-        # create a copy of the data and remove the id
 
         sql = f"UPDATE  {self.table_name} set {holders}  {self._wheres}"
         try:
@@ -97,6 +100,7 @@ class DB:
         except Exception as e:
             self.connection.rollback()
             raise e
+        return data
 
     def order_by(self):
         pass
@@ -127,16 +131,29 @@ class DB:
             self.connection.rollback()
             raise e
 
-    def _find(self, id):
+    def find(self, id):
         sql = f"Select * from {self.table_name} where id=%s"
         self.cursor.execute(sql, [id])
-        return self._fetch_one()
+        return self._dictify(self._fetch_one())
+
+    def first(self):
+        sql = f"SELECT * from {self.table_name} {self._wheres}"
+        self.cursor.execute(sql, self._where_bindings)
+        return self._dictify(self._fetch_one())
+
+    def first_or_fail(self):
+        return self._result_or_fail(self.first())
 
     def find_or_fail(self, id):
-        result = self._find(id)
+        return self._result_or_fail(self.find(id))
+
+    @classmethod
+    def _result_or_fail(cls, result):
         if result:
-            return self._dictify(result)
-        abort(404)
+            return result
+        return abort(404)
 
     def _dictify(self, result):
+        if not result:
+            return None
         return dict(zip(self.table_columns(), result))
