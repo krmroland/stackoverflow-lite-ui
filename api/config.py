@@ -1,7 +1,7 @@
 class Configuration:
     """Common configuration for all environments """
     DB_NAME = "stackoverflow"
-    pass
+    SECRET = "J0NJxenTRjjupTknRQsKFbka5JoIxgmAKQcMfl1vkB8"
 
 
 class TestConfiguration(Configuration):
