@@ -1,13 +1,27 @@
+from os import getenv, path
+from dotenv import load_dotenv
+import sys
+
+# load environment variables
+env_path = path.abspath(".env")
+
+if not path.exists(env_path):  # pragma: no cover
+    print("A .env configuration file was not found in your root project")
+    sys.exit(0)
+
+load_dotenv(verbose=True, dotenv_path=env_path)
+
+
 class Configuration:
     """Common configuration for all environments """
-    DB_NAME = "stackoverflow"
-    SECRET = "J0NJxenTRjjupTknRQsKFbka5JoIxgmAKQcMfl1vkB8"
+    DB_NAME = getenv("DB_NAME")
+    SECRET = getenv("APP_KEY")
 
 
 class TestConfiguration(Configuration):
     """Configuration for the test environment"""
     TESTING = True
-    DB_NAME = "testing_stackoverflow"
+    DB_NAME = getenv("TEST_DB_NAME")
 
 
 class DevelopmentConfiguration(Configuration):
