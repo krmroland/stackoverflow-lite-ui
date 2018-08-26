@@ -1,5 +1,6 @@
 from flask import jsonify
 
+
 errors = [
 
     {
@@ -14,33 +15,27 @@ errors = [
         "code": 500,
         "description": "The server  was unable to complete your request"
     },
+    {
+        "code": 422
+    },
+    {
+        "code": 401
+    },
+    {
+        "code": 404
+    }
 ]
 
 
-def _json_error(code, description):
-    def error_handler(e):
+def _register_error_handler(app, error):
+    code = error["code"]
+
+    def error_handler(exception):
+        description = error.get("description", exception.description)
         return jsonify(dict(error=description)), code
-    return error_handler
-
-
-def validation_exception(e):
-    return jsonify(e.response), 422
-
-
-def not_found_exception(e):
-    response = e.response or dict(error="Resource doesn't exist")
-    return jsonify(response), 404
-
-
-def _register_generic_errors(app):
-    for error in errors:
-        app.register_error_handler(
-            error["code"],
-            _json_error(error["code"], error["description"])
-        )
+    app.register_error_handler(code, error_handler)
 
 
 def handle_errors(app):
-    app.register_error_handler(422, validation_exception)
-    app.register_error_handler(404, not_found_exception)
-    _register_generic_errors(app)
+    for error in errors:
+        _register_error_handler(app, error)

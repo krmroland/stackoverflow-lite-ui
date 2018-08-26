@@ -1,4 +1,4 @@
-from flask import abort
+from api.core.exceptions import ModelNotFoundException
 from . import Connect
 
 
@@ -35,7 +35,7 @@ class DB:
             filters = kwargs
 
         if not filters:
-            return self
+            return self  # pragma: no cover
 
         self._wheres = "WHERE {}".format(
             f" {query_type} ".join([f"{key}=%s" for key in filters])
@@ -74,9 +74,20 @@ class DB:
             self.connection.rollback()
             raise e
 
+    def exists(self):
+        if not self._wheres:
+            return False  # pragma: no cover
+        sql = f"SELECT exists (SELECT * from {self.table_name} {self._wheres})"
+        try:
+            self.cursor.execute(sql, self._where_bindings)
+            return self._fetch_one()[0]
+        except Exception as e:
+            self.connection.rollback()
+            raise e
+
     def delete(self):
         if not self._where_bindings:
-            return False
+            return False  # pragma: no cover
         sql = f"DELETE  from {self.table_name}  {self._wheres}"
 
         try:
@@ -88,7 +99,7 @@ class DB:
 
     def update(self, data):
         if not self._where_bindings:
-            return False
+            return False  # pragma: no cover
         holders = ",".join([f"{key}= %s" for key in data])
 
         sql = f"UPDATE  {self.table_name} set {holders}  {self._wheres}"
@@ -152,7 +163,7 @@ class DB:
     def _result_or_fail(cls, result):
         if result:
             return result
-        return abort(404)
+        raise ModelNotFoundException()
 
     def _dictify(self, result):
         if not result:
