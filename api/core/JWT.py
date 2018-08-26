@@ -15,8 +15,8 @@ class JWT:
     def generate_token(self, subject):
         return jwt.encode(
             {'subject': subject, 'exp': self.expires},
-            **self._make_options(),
-        ).decode("UTF-8")
+            **self._make_options()
+        )
 
     def get_subject_from_headers(self):
         token = self.get_token_from_header()
