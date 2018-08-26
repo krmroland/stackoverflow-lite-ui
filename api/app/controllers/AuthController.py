@@ -4,7 +4,7 @@ from api.app.models import User
 
 class AuthController:
     @classmethod
-    def register(cls):
+    def sign_up(cls):
         data = request.validate({
             "email": "required|email|unique:users",
             "password": "required|min_length:6|confirmed",

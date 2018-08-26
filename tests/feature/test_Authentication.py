@@ -19,7 +19,7 @@ class TestAuthentication(BaseTestCase):
         }
 
     def test_registration_returns_a_422_response_with_invalid_data(self):
-        rv = self.post("/auth/register")
+        rv = self.post("/auth/signup")
         self.assertEqual(rv.status_code, 422)
 
     def test_registration_returns_a_201_response_with_a_valid_data(self):
@@ -64,4 +64,4 @@ class TestAuthentication(BaseTestCase):
         self.assertEqual(rv.status_code, 401)
 
     def create_user(self):
-        return self.post("/auth/register", self.user_fields)
+        return self.post("/auth/signup", self.user_fields)

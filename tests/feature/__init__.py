@@ -51,7 +51,7 @@ class BaseTestCase(TestCase):
             password="password",
             password_confirmation="password"
         )
-        rv = self.post("/auth/register", user)
+        rv = self.post("/auth/signup", user)
         # ensure registration passed since Flask doesn't handle errors
         # during testing
 
