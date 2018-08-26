@@ -13,9 +13,6 @@ class Fluent:
     def update(self, attributes):
         self.attributes.update(attributes)
 
-    def values(self):
-        return self.attributes.values()
-
     def set_attributes(self, attributes):
         object.__setattr__(self, "attributes", attributes)
 

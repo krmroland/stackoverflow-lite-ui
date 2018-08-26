@@ -28,6 +28,7 @@ pylint==2.1.1
 pytest==3.7.1
 pytest-cov==2.5.1
 python-coveralls==2.9.1
+python-dotenv==0.9.1
 PyYAML==3.13
 requests==2.19.1
 six==1.11.0
