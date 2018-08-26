@@ -10,6 +10,7 @@ class BaseTestCase(TestCase):
         self.client = self.app.test_client()
         self.url_prefix = "api"
         self.api_version = "v1.0"
+        self.auth_token = None
         with self.app.app_context():
             migrate()
 
@@ -38,4 +39,26 @@ class BaseTestCase(TestCase):
         options = dict(path=self._base_url(url))
         if json:
             options["json"] = json
+        if self.auth_token:
+            headers = dict(Authorization=f"Bearer {self.auth_token}")
+            options["headers"] = headers
         return options
+
+    def with_authentication(self):
+        user = dict(
+            name="Ahimbisibwe Roland",
+            email="rolandmbasa@gmail.com",
+            password="password",
+            password_confirmation="password"
+        )
+        rv = self.post("/auth/register", user)
+        # ensure registration passed since Flask doesn't handle errors
+        # during testing
+
+        assert rv.status_code == 201
+
+        rv = self.post("/auth/login", user)
+
+        assert rv.status_code == 200
+
+        self.auth_token = rv.get_json().get("token")

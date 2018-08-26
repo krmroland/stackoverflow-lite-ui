@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from api.app.models import Question
+from .BaseController import ProtectedController
 
 validation_rules = {
     "title": "required|min_length:3|max_length:50",
@@ -7,7 +8,7 @@ validation_rules = {
 }
 
 
-class QuestionsController:
+class QuestionsController(ProtectedController):
     @classmethod
     def index(cls):
         return jsonify({

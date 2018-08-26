@@ -1,5 +1,5 @@
 from flask import jsonify
-
+from jwt.exceptions import ExpiredSignatureError
 
 errors = [
 
@@ -24,6 +24,7 @@ errors = [
     {
         "code": 404
     }
+
 ]
 
 
@@ -36,6 +37,11 @@ def _register_error_handler(app, error):
     app.register_error_handler(code, error_handler)
 
 
+def token_expired(e):
+    return jsonify({"error": "Token has expired"}), 401
+
+
 def handle_errors(app):
+    app.register_error_handler(ExpiredSignatureError, token_expired)
     for error in errors:
         _register_error_handler(app, error)

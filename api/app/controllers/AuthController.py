@@ -18,4 +18,10 @@ class AuthController:
             "email": "required|email",
             "password": "required|min_length:6",
         })
-        return jsonify(data=dict(User.authenticate(data)))
+
+        return jsonify(
+            {
+                "token": User.auth().authenticate(data),
+                "message": "Authentication was successful"
+            }
+        )
