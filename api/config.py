@@ -1,6 +1,7 @@
+import sys
 from os import getenv, path
 from dotenv import load_dotenv
-import sys
+
 
 # load environment variables
 env_path = path.abspath(".env")
