@@ -1,14 +1,9 @@
-import sys
 from os import getenv, path
 from dotenv import load_dotenv
 
 
 # load environment variables
 env_path = path.abspath(".env")
-
-if not path.exists(env_path):  # pragma: no cover
-    print("A .env configuration file was not found in your root project")
-    sys.exit(0)
 
 load_dotenv(verbose=True, dotenv_path=env_path)
 
