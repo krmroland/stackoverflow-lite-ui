@@ -1,8 +1,9 @@
 from flask import jsonify, request
 from api.app.models import Question, Answer
+from .BaseController import ProtectedController
 
 
-class AnswersController:
+class AnswersController(ProtectedController):
     @classmethod
     def index(cls, question_id):
         question = Question.find_or_fail(question_id).load("answers")

@@ -4,6 +4,31 @@ from api.core.models import Model
 from api.core import JWT
 
 
+class Auth:
+    user = None
+
+    def __init__(self, UserModel):
+        self.UserModel = UserModel
+        self.jwt = JWT()
+
+    def authenticate(self, credentials):
+        user = self.get_user(credentials["email"])
+        if not user._password_matches(credentials["password"]):
+            return abort(401, "Invalid login credentials")
+        return self.jwt.generate_token(user.attributes["email"])
+
+    def is_authenticated(self):
+        if not self.user:
+            self.user = self.get_user(self.jwt.get_subject_from_headers())
+        return True
+
+    def get_user(self, email):
+        data = self.UserModel.where(email=email).first()
+        if not data:
+            return abort(401, "Email Address not found")
+        return self.UserModel(data)
+
+
 class User(Model):
     hidden = ["password"]
 
@@ -15,12 +40,9 @@ class User(Model):
         password = self.attributes["password"]
         self.attributes["password"] = generate_password_hash(password)
 
-    @classmethod
-    def authenticate(cls, credentials):
-        data = cls.where(email=credentials["email"]).first()
-        if data and User(data)._password_matches(credentials["password"]):
-            return JWT().generate_token(data["email"])
-        return abort(401, "Invalid login credentials")
-
     def _password_matches(self, password):
         return check_password_hash(self.attributes["password"], password)
+
+    @classmethod
+    def auth(cls):
+        return Auth(cls)

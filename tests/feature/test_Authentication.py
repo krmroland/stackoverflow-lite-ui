@@ -46,7 +46,22 @@ class TestAuthentication(BaseTestCase):
     def test_login_returns_a_token_with_valid_credentials(self):
         self.create_user()
         rv = self.post("/auth/login", self.login_credentials)
-        self.assertIn("token", rv.get_json()["data"])
+        self.assertIn("token", rv.get_json())
+
+    def test_login_fails_with_an_invalid_password(self):
+        self.create_user()
+
+        wrong_credentials = {
+            "email": "rolandmbasa@gmail.com",
+            "password": "Wrong password"
+        }
+
+        rv = self.post("/auth/login", wrong_credentials)
+        self.assertEqual(rv.status_code, 401)
+
+    def test_protected_route_fails_without_authentication(self):
+        rv = self.get("/questions")
+        self.assertEqual(rv.status_code, 401)
 
     def create_user(self):
         return self.post("/auth/register", self.user_fields)

@@ -4,6 +4,9 @@ from tests.feature import BaseTestCase
 class TestQuestions(BaseTestCase):
     def setUp(self):
         super().setUp()
+
+        self.with_authentication()
+
         self.question = dict(
             title="Whats your take on Joining Andela",
             description="Give a description on what your take on"

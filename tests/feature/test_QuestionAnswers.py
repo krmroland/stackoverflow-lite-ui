@@ -4,7 +4,7 @@ from tests.feature import BaseTestCase
 class TestQuestionAnswers(BaseTestCase):
     def setUp(self):
         super().setUp()
-
+        self.with_authentication()
         self.question = dict(
             title="Travis CI",
             description="How do I integrate Travis"
