@@ -77,60 +77,58 @@ While in the terminal in the `UI` directory
 - [Pip](https://pypi.org/project/pip/) A tool for installing python packages
 - [Virtualenv](https://virtualenv.pypa.io/en/stable/)  A tool to create isolated Python environments
 - [Postgresql](https://www.postgresql.org/) An open  source relational database
-
 #### Development setup
 - Create a virtual environment and activate it
-    ```bash
-     virtualenv venv
-     source /venv/bin/activate
-    ```
+  ```bash
+   virtualenv venv
+   source /venv/bin/activate
+  ```
 - Install dependencies 
-    ```bash
-    pip3 install requirements.txt
-    ```
-- Setup database
-  - Ensure that [Postgresql](https://www.postgresql.org/) is installed 
-  - Create two databases named;
-     - `testing_stackoverflow` for the test environment
-     -  `stackoverflow` for other environments
+  ```bash
+  pip3 install requirements.txt
+  ```
+- Setting environmental variables
 
-__Note__: You  can change the names of the above mentioned databases, just make sure you head to `api/config.py` and update the key `DB_NAME` for both environments when you do.
+  Rename `.env.example` to `.env` and replace the dummy values with the actual values e.g the database name for both the testing environment and the development environment.
+
 
 #### Run the database migrations
 ```bash
-    #export the flask application in order to locate the migrate:fresh command
-    export FLASK_APP=run.py
-    flask migrate:fresh
+ flask migrate:fresh
 ``` 
 
 
 
 #### Run the application
 ```bash
-export FLASK_ENV=development
 python run.py
 ```
 
 #### Running tests
 ```bash
+
 pytest
+
 #with coverage
 pytest pytest   -v --cov api/app
 ```
 #### API REST End Points
-| End Point                                           | Verb |Use                                   |
-| ----------------------------------------------------|------|--------------------------------------|
-|`/api/v1.0/`                                         |GET   |API index                             |
-|`/api/v1.0/questions`                                |GET   |Gets a list of Questions              |
-|`/api/v1.0/questions`                                |POST  |Stores a Question resource            |
-|`/api/v1.0/questions/<int:id>`                       |GET   |Gets a Question resource of a given ID|
-|`/api/v1.0/questions/<int:id> `                      |PATCH |Updates a Question resource           |
-|`/api/v1.0/questions<int:id>`                        |DELETE|Deletes a Question resource           |
-|`/api/v1.0/questions/<int:id>/answers`               |GET   |Gets a answers of a specific question |
-|`/api/v1.0/questions/<int:id>/answers`               |POST  |Adds a an answer to a question        |
-|`/api/v1.0/questions/<int:id>/answers/<int:id>`      |GET   |Gets a specific answer                |
-|`/api/v1.0/questions/<int:id>/answers/<int:id>`      |UPDATE|Updates an existing answer            |
-|`/api/v1.0/questions/<int:id>/answers/<int:id>`      |DELETE|Deletes an existing answer            |
+| End Point                                           | Verb |Use                                            |
+| ----------------------------------------------------|------|-----------------------------------------------|
+|`/api/v1.0/`                                         |GET   |API index                                      |
+|`/api/v1.0/questions`                                |GET   |Gets a list of Questions                       |
+|`/api/v1.0/questions`                                |POST  |Stores a Question resource                     |
+|`/api/v1.0/questions/<int:id>`                       |GET   |Gets a Question resource of a given ID         |
+|`/api/v1.0/questions/<int:id> `                      |PATCH |Updates a Question resource                    |
+|`/api/v1.0/questions<int:id>`                        |DELETE|Deletes a Question resource                    |
+|`/api/v1.0/questions/<int:id>/answers`               |GET   |Gets a answers of a specific question          |
+|`/api/v1.0/questions/<int:id>/answers`               |POST  |Adds a an answer to a question                 |
+|`/api/v1.0/questions/<int:id>/answers/<int:id>`      |GET   |Gets a specific answer                         |
+|`/api/v1.0/questions/<int:id>/answers/<int:id>`      |UPDATE|Updates an existing answer                     |
+|`/api/v1.0/questions/<int:id>/answers/<int:id>`      |DELETE|Deletes an existing answer                     |
+|`/api/v1.0/auth/signup`                              |POST  | Creates a user account                        |
+|`/api/v1.0/auth/login`                               |POST  |Exchanges  user credentials with a token       |
+
 
 #### Built With
 - [Flask](http://flask.pocoo.org/) A microframework for Python based on Werkzeug, Jinja 2 
@@ -140,4 +138,5 @@ pytest pytest   -v --cov api/app
  A Special thanks goes to 
 1. [Andela](https://andela.com/) for having given me an opportunity to participate in the boot camp, without them , this application wouldn't be a success.
 
-2. [UI Faces](https://uifaces.co/) for providing free avatar sources that I used in the UI templates
+2. [UI Faces](https://uifaces.co/) for providing free avatar sources that I used in the UI templates .
+3. [Laravel](https://laravel.com)  for the inspirational app structure .
