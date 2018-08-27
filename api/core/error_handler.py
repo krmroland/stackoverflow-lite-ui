@@ -1,5 +1,5 @@
 from flask import jsonify
-from jwt.exceptions import ExpiredSignatureError
+from jwt.exceptions import ExpiredSignatureError, DecodeError
 
 errors = [
 
@@ -41,7 +41,13 @@ def token_expired(e):
     return jsonify({"error": "Token has expired"}), 401
 
 
+def error_token(e):
+    return jsonify({"error": "Error decoding token"}), 401
+
+
 def handle_errors(app):
     app.register_error_handler(ExpiredSignatureError, token_expired)
+    app.register_error_handler(DecodeError, error_token)
+
     for error in errors:
         _register_error_handler(app, error)

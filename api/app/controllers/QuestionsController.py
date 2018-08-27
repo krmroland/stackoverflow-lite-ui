@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from api.app.models import Question
+from api.app.models import Question, User
 from .BaseController import ProtectedController
 
 validation_rules = {
@@ -37,5 +37,10 @@ class QuestionsController(ProtectedController):
 
     @classmethod
     def destroy(cls, id):
-        Question.find_or_fail(id).delete()
+        question = Question.find_or_fail(id)
+        if not User.can_delete_quesiton(question):
+            return jsonify(dict(
+                error="Access denied  to delete question"
+            )), 401
+        question.delete()
         return jsonify(dict(message="Resource was removed successfully"))

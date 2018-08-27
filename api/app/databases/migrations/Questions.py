@@ -6,6 +6,7 @@ class QuestionsTable(Migration):
     def up(self):
         table = TableSchema.create("questions")
         table.increments("id")
+        table.integer("user_id")
         table.string("title", 100)
         table.text("description")
         table.timestamps()
