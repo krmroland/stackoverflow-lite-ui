@@ -94,6 +94,7 @@ While in the terminal in the `UI` directory
 
 #### Run the database migrations
 ```bash
+ # Delete all tables and recreate them
  flask migrate:fresh
 ``` 
 
@@ -139,4 +140,3 @@ pytest pytest   -v --cov api/app
 1. [Andela](https://andela.com/) for having given me an opportunity to participate in the boot camp, without them , this application wouldn't be a success.
 
 2. [UI Faces](https://uifaces.co/) for providing free avatar sources that I used in the UI templates .
-3. [Laravel](https://laravel.com)  for the inspirational app structure .
