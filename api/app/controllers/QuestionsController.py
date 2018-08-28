@@ -29,8 +29,14 @@ class QuestionsController(ProtectedController):
 
     @classmethod
     def update(cls, id):
+        question = Question.find_or_fail(id)
+        if not User.owns_question(question):
+            return jsonify({
+                "error": "Access denied for updating question"
+            }), 401
+
         return jsonify({
-            "data": Question.find_or_fail(id).update(
+            "data": question.update(
                 request.validate(validation_rules)
             )
         })
@@ -38,7 +44,7 @@ class QuestionsController(ProtectedController):
     @classmethod
     def destroy(cls, id):
         question = Question.find_or_fail(id)
-        if not User.can_delete_quesiton(question):
+        if not User.owns_question(question):
             return jsonify(dict(
                 error="Access denied  to delete question"
             )), 401

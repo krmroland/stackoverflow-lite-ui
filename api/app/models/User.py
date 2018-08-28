@@ -29,7 +29,9 @@ class Auth:
 
     @classmethod
     def id(cls):
-        return cls.user and cls.user.attributes["id"]
+        if cls.user:
+            return cls.user.attributes["id"]
+        abort(401, "User is not signed in")  # pragma: no cover
 
 
 class User(Model):
@@ -47,9 +49,16 @@ class User(Model):
         return check_password_hash(self.attributes["password"], password)
 
     @classmethod
-    def can_delete_quesiton(cls, question):
-        user_id = Auth.id()
-        return user_id and user_id == question.get_attribute("user_id")
+    def owns_question(cls, question):
+        return cls.entity_belongs_to_user(question)
+
+    @classmethod
+    def owns_answer(cls, answer):
+        return cls.entity_belongs_to_user(answer)
+
+    @classmethod
+    def entity_belongs_to_user(cls, entity, attribute="user_id"):
+        return Auth.id() == entity.get_attribute(attribute)
 
     @classmethod
     def auth(cls):

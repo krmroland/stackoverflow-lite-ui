@@ -48,16 +48,6 @@ class TestQuestions(BaseTestCase):
         rv = self.delete("/questions/1")
         self.assertEqual(rv.status_code, 200)
 
-    def test_returns_a_401_response_when_deleting_others_question(self):
-        self.post("/questions", self.question)
-        user = dict({
-            "name": "Ahimbisibwe Roland",
-            "email": "lonusroland@gmail.com",
-        })
-        self.login(user)
-        rv = self.delete("/questions/1")
-        self.assertEqual(rv.status_code, 401)
-
     def test_it_returns_a_404_status_code_when_deleting_an_non_id(self):
         rv = self.delete("/questions/1")
         self.assertEqual(rv.status_code, 404)
@@ -70,3 +60,17 @@ class TestQuestions(BaseTestCase):
         self.assertEqual(rv.status_code, 200)
         data = rv.get_json()["data"]
         self.assertEqual(data["title"], self.question["title"])
+
+    def test_returns_a_401_response_when_deleting_others_question(self):
+        self.post("/questions", self.question)
+        self.login(self.user_two)
+        rv = self.delete("/questions/1")
+        self.assertEqual(rv.status_code, 401)
+
+    def test_returns_a_401_when_updating_others_users_question(self):
+        self.post("/questions", self.question)
+        self.login(self.user_two)
+        update = dict(title="Updated title", description="Updated description")
+        self.question.update(update)
+        rv = self.patch("/questions/1", update)
+        self.assertEqual(rv.status_code, 401)

@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from api.app.models import Question, Answer
+from api.app.models import Question, Answer, User
 from .BaseController import ProtectedController
 
 
@@ -24,14 +24,16 @@ class AnswersController(ProtectedController):
 
     @classmethod
     def update(cls, question_id, answer_id):
-        answer = Answer.find_or_fail(answer_id).update(
-            request.validate({
-                "body": "required"
-            }))
-
-        return jsonify(dict(data=answer)), 200
+        answer = Answer.find_or_fail(answer_id)
+        if User.owns_answer(answer):
+            answer.update(request.validate({"body": "required"}))
+            return jsonify(dict(data=answer)), 200
+        return jsonify(dict(error="Access denied for updating answer")), 401
 
     @classmethod
     def destroy(cls, question_id, answer_id):
-        Answer.by_question_id(question_id, answer_id).delete()
+        answer = Answer.find_or_fail(answer_id)
+        if not User.owns_answer(answer):
+            return jsonify(dict(error="Access denied")), 401
+        answer.delete()
         return jsonify(dict(message="Answer was successively removed")), 200
