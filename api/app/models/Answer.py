@@ -1,5 +1,5 @@
 from api.core.models import Model
-from .User import Auth
+from .User import User
 
 
 class Answer(Model):
@@ -12,4 +12,4 @@ class Answer(Model):
         return cls.where(question_id=qtn_id, id=ans_id)
 
     def _creating(self):
-        self.attributes["user_id"] = Auth.id()
+        self.attributes["user_id"] = User.auth().id()

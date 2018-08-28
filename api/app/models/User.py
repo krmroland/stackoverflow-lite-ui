@@ -5,33 +5,49 @@ from api.core import JWT
 
 
 class Auth:
-    user = None
+    _current_subject = None
+
+    _User = None
 
     def __init__(self, UserModel):
         self.UserModel = UserModel
         self.jwt = JWT()
 
-    def authenticate(self, credentials):
+    def issue_token(self, credentials):
         user = self.get_user(credentials["email"])
         if not user._password_matches(credentials["password"]):
             return abort(401, "Invalid login credentials")
         return self.jwt.generate_token(user.attributes["email"])
 
+    def authenticate(self):
+        subject = self.jwt.get_subject_from_headers()
+        current_subject = Auth._current_subject
+        # user could be cached, there is no reason to make another db query
+        if current_subject and subject == current_subject and Auth._user:
+            return True  # pragma: no cover
+        Auth._current_subject = True
+        Auth._user = self.get_user(subject)
+        return True
+
     def is_authenticated(self):
-        Auth.user = self.get_user(self.jwt.get_subject_from_headers())
+        self.authenticate()
         return True
 
     def get_user(self, email):
         data = self.UserModel.where(email=email).first()
         if not data:
-            return abort(401, "Email Address not found")
+            return abort(
+                401,
+                "Authentication Failed (Invalid Login Credentials)"
+            )
         return self.UserModel(data)
 
-    @classmethod
-    def id(cls):
-        if cls.user:
-            return cls.user.attributes["id"]
-        abort(401, "User is not signed in")  # pragma: no cover
+    def id(self):
+        try:
+            self.authenticate()
+        except Exception:
+            abort(401, "User is not signed in")  # pragma: no cover
+        return Auth._user.attributes["id"]
 
 
 class User(Model):
@@ -58,7 +74,7 @@ class User(Model):
 
     @classmethod
     def entity_belongs_to_user(cls, entity, attribute="user_id"):
-        return Auth.id() == entity.get_attribute(attribute)
+        return User.auth().id() == entity.get_attribute(attribute)
 
     @classmethod
     def auth(cls):

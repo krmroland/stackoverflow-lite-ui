@@ -28,6 +28,15 @@ class AnswersController(ProtectedController):
         if User.owns_answer(answer):
             answer.update(request.validate({"body": "required"}))
             return jsonify(dict(data=answer)), 200
+
+        question = Question.find_or_fail(question_id)
+
+        if User.owns_question(question):
+            question.update(dict(answer_id=answer_id))
+            return jsonify(
+                dict(message="Answer marked as the preferred")
+            ), 200
+
         return jsonify(dict(error="Access denied for updating answer")), 401
 
     @classmethod
