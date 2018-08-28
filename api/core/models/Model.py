@@ -116,6 +116,9 @@ class Model(ModelEvents):
 
         return ModelCollection(models)
 
+    def get_attribute(self, name):
+        return self.attributes.get(name)
+
     def __repr__(self):
         return str(self.attributes)
 

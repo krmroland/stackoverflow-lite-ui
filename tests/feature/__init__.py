@@ -45,12 +45,19 @@ class BaseTestCase(TestCase):
         return options
 
     def with_authentication(self):
-        user = dict(
-            name="Ahimbisibwe Roland",
-            email="rolandmbasa@gmail.com",
-            password="password",
-            password_confirmation="password"
-        )
+        self.login()
+
+    def login(self, user=None):
+        if not user:
+            user = dict(
+                name="Ahimbisibwe Roland",
+                email="rolandmbasa@gmail.com",
+
+            )
+
+        user["password"] = "password"
+        user["password_confirmation"] = "password"
+
         rv = self.post("/auth/signup", user)
         # ensure registration passed since Flask doesn't handle errors
         # during testing
