@@ -24,8 +24,8 @@ class Auth:
         current_subject = Auth._current_subject
         # user could be cached, there is no reason to make another db query
         if current_subject and subject == current_subject and Auth._user:
-            return True  # pragma: no cover
-        Auth._current_subject = True
+            return True
+        Auth._current_subject = subject
         Auth._user = self.get_user(subject)
         return True
 

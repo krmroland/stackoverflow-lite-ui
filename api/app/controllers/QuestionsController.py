@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from api.app.models import Question, User
-from .BaseController import ProtectedController
+from .ProtectedController import ProtectedController
 
 validation_rules = {
     "title": "required|min_length:3|max_length:50",

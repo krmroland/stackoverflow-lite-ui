@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from api.app.models import Question, Answer, User
-from .BaseController import ProtectedController
+from .ProtectedController import ProtectedController
 
 
 class AnswersController(ProtectedController):
