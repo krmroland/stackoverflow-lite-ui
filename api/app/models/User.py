@@ -58,8 +58,7 @@ class User(Model):
 
     @classmethod
     def entity_belongs_to_user(cls, entity, attribute="user_id"):
-        user_id = Auth.id()
-        return user_id and user_id == entity.get_attribute(attribute)
+        return Auth.id() == entity.get_attribute(attribute)
 
     @classmethod
     def auth(cls):
