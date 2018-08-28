@@ -24,16 +24,15 @@ class AnswersController(ProtectedController):
 
     @classmethod
     def update(cls, question_id, answer_id):
-        answer = Answer.find_or_fail(answer_id).update(
-            request.validate({
-                "body": "required"
-            }))
-
-        return jsonify(dict(data=answer)), 200
+        answer = Answer.find_or_fail(answer_id)
+        if User.owns_answer(answer):
+            answer.update(request.validate({"body": "required"}))
+            return jsonify(dict(data=answer)), 200
+        return jsonify(dict(error="Access denied for updating answer")), 401
 
     @classmethod
     def destroy(cls, question_id, answer_id):
-        answer = Answer(Answer.where(id=answer_id).first_or_fail())
+        answer = Answer.find_or_fail(answer_id)
         if not User.owns_answer(answer):
             return jsonify(dict(error="Access denied")), 401
         answer.delete()

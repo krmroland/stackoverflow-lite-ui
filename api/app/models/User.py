@@ -31,7 +31,7 @@ class Auth:
     def id(cls):
         if cls.user:
             return cls.user.attributes["id"]
-        abort(401, "User is not signed in")
+        abort(401, "User is not signed in")  # pragma: no cover
 
 
 class User(Model):
