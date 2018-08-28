@@ -47,7 +47,7 @@ class User(Model):
         return check_password_hash(self.attributes["password"], password)
 
     @classmethod
-    def can_delete_quesiton(cls, question):
+    def owns_question(cls, question):
         user_id = Auth.id()
         return user_id and user_id == question.get_attribute("user_id")
 

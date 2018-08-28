@@ -11,6 +11,14 @@ class BaseTestCase(TestCase):
         self.url_prefix = "api"
         self.api_version = "v1.0"
         self.auth_token = None
+        self.user_one = dict({
+            "name": "Ahimbisibwe Roland",
+            "email": "lonusroland@gmail.com",
+        })
+        self.user_two = dict({
+            "name": "Nabaasa Richard",
+            "email": "nabrick@gmail.com",
+        })
         with self.app.app_context():
             migrate()
 
@@ -49,11 +57,7 @@ class BaseTestCase(TestCase):
 
     def login(self, user=None):
         if not user:
-            user = dict(
-                name="Ahimbisibwe Roland",
-                email="rolandmbasa@gmail.com",
-
-            )
+            user = self.user_one
 
         user["password"] = "password"
         user["password_confirmation"] = "password"
