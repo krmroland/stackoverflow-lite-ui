@@ -29,7 +29,9 @@ class Auth:
 
     @classmethod
     def id(cls):
-        return cls.user and cls.user.attributes["id"]
+        if cls.user:
+            return cls.user.attributes["id"]
+        abort(401, "User is not signed in")
 
 
 class User(Model):
@@ -48,8 +50,16 @@ class User(Model):
 
     @classmethod
     def owns_question(cls, question):
+        return cls.entity_belongs_to_user(question)
+
+    @classmethod
+    def owns_answer(cls, answer):
+        return cls.entity_belongs_to_user(answer)
+
+    @classmethod
+    def entity_belongs_to_user(cls, entity, attribute="user_id"):
         user_id = Auth.id()
-        return user_id and user_id == question.get_attribute("user_id")
+        return user_id and user_id == entity.get_attribute(attribute)
 
     @classmethod
     def auth(cls):

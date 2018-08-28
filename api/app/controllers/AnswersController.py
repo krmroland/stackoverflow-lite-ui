@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from api.app.models import Question, Answer
+from api.app.models import Question, Answer, User
 from .BaseController import ProtectedController
 
 
@@ -33,5 +33,8 @@ class AnswersController(ProtectedController):
 
     @classmethod
     def destroy(cls, question_id, answer_id):
-        Answer.by_question_id(question_id, answer_id).delete()
+        answer = Answer(Answer.where(id=answer_id).first_or_fail())
+        if not User.owns_answer(answer):
+            return jsonify(dict(error="Access denied")), 401
+        answer.delete()
         return jsonify(dict(message="Answer was successively removed")), 200

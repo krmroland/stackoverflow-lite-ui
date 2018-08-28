@@ -21,6 +21,7 @@ class AnswersTable(Migration):
         table.increments("id")
         table.text("body")
         table.integer("question_id")
+        table.integer("user_id")
         table.timestamps()
 
     def down(self):
