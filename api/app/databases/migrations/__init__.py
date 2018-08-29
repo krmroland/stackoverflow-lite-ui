@@ -1,6 +1,6 @@
 from .Questions import QuestionsTable, AnswersTable
 from .User import UsersTable
 
-migrations = [QuestionsTable(), AnswersTable(), UsersTable()]
+migrations = [UsersTable(), QuestionsTable(), AnswersTable()]
 
 __all__ = ["migrations"]

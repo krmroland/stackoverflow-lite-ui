@@ -68,3 +68,16 @@ class TestQuestionAnswers(BaseTestCase):
         self.delete(self.answer_url(1))
         rv = self.get(self.answer_url(1))
         self.assertEqual(rv.status_code, 404)
+
+    def test_updating_answer_marks_the_answer_prefered(self):
+        # keep the token for the first user
+        token = self.auth_token
+        self.login(self.user_two)
+        answer = self.post(
+            self.answers_url(), dict(body="Some cool answer")
+        ).get_json().get("data")
+        # swap the tokens to login the first user again
+        self.auth_token = token
+        self.put(self.answer_url(1))
+        question = self.get("/questions/1").get_json().get("data")
+        self.assertEqual(answer["id"], question["answer_id"])
