@@ -21,7 +21,7 @@ class AuthController:
 
         return jsonify(
             {
-                "token": User.auth().authenticate(data),
+                "token": User.auth().issue_token(data),
                 "message": "Authentication was successful"
             }
         )

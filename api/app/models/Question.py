@@ -1,6 +1,6 @@
 from api.core.models import Model
 from .Answer import Answer
-from .User import Auth
+from .User import User
 
 
 class Question(Model):
@@ -12,4 +12,4 @@ class Question(Model):
         return self.has_many(Answer)
 
     def _creating(self):
-        self.attributes["user_id"] = Auth.id()
+        self.attributes["user_id"] = User.auth().id()
