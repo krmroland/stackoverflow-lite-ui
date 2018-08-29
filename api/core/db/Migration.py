@@ -17,19 +17,24 @@ class DataTypeCompiler:
             return f"VARCHAR ({self.attributes.length})"
         if type == "timestamp":
             return "timestamp without time zone"
+        if type == "serial":
+            return "SERIAL PRIMARY KEY"
         return type.upper()
 
     def compile_attributes(self):
-        if self.attributes.is_serial:
-            self.compiled.append("SERIAL")
-
-        if self.attributes.is_primary:
-            self.compiled.append("PRIMARY KEY")
 
         if self.attributes.nullable:
             self.compiled.append("NULL")
-        else:
+        elif not self.attributes.type == "serial":
             self.compiled.append("NOT NULL")
+
+        if self.attributes.references:
+            self.compiled.append(
+                "REFERENCES {}({})".format(
+                    self.attributes.on_table,
+                    self.attributes.references
+                )
+            )
 
 
 class DataType:
@@ -89,11 +94,11 @@ class TableSchema:
         return self.add_field(DataType(name).type("timestamp"))
 
     def increments(self, name):
-        return self.add_field(DataType(name).type("Serial"))
+        return self.add_field(DataType(name).type("serial"))
 
     @classmethod
     def drop_if_exists(cls, table):
-        return cls.add_global_command(f"drop table if exists {table}")
+        return cls.add_global_command(f"drop table if exists {table} cascade")
 
     @classmethod
     def add_global_command(cls, command):
