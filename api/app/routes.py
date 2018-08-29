@@ -8,4 +8,4 @@ Router.group([
     Router.resource("/questions.answers", AnswersController),
     Router.post("/auth/signup", AuthController, "sign_up"),
     Router.post("/auth/login", AuthController, "login")
-]).prefix("/api/v1.0")
+]).prefix("/api/v1.1")

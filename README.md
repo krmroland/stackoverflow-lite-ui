@@ -51,7 +51,7 @@ UI template development uses the following tools;
 
 
 
-#### Requiremens
+#### Requirements
 Ensure that you have the following tools available locally on your machine
 
 -   [Node js](https://nodejs.org/en/), a JavaScript runtime built on Chrome's V8 JavaScript engine.
@@ -71,7 +71,9 @@ While in the terminal in the `UI` directory
  3. `npm run watch` or `yarn run watch` to set up a local development server and watch all the files for changes and live reload
 
 # API
-#### This __api__ is currently hosted on [heroku](https://andela-stackoverflow-v1.herokuapp.com/api/v1.0/)
+#### This __api__ is currently  has two versions hosted on heroku;
+- [v.1.0 (In memory Data Structures)](https://andela-stackoverflow-v1.herokuapp.com/api/v1.0/)
+- [V.1.1 (Uses Databases)](https://andela-stackoverflow.herokuapp.com/api/v1.1/)
 #### Requirements
 - [Python](https://www.python.org/) A general purpose programming language
 - [Pip](https://pypi.org/project/pip/) A tool for installing python packages
