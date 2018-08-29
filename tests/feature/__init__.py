@@ -9,7 +9,7 @@ class BaseTestCase(TestCase):
         self.app = create_app("testing")
         self.client = self.app.test_client()
         self.url_prefix = "api"
-        self.api_version = "v1.0"
+        self.api_version = "v1.1"
         self.auth_token = None
         self.user_one = dict({
             "name": "Ahimbisibwe Roland",
