@@ -1,6 +1,6 @@
 from unittest import TestCase
 from api.app import create_app
-from api.core.storage import Storage
+from api.core.commands import migrate
 
 
 class BaseTestCase(TestCase):
@@ -10,10 +10,20 @@ class BaseTestCase(TestCase):
         self.client = self.app.test_client()
         self.url_prefix = "api"
         self.api_version = "v1.0"
+        self.auth_token = None
+        self.user_one = dict({
+            "name": "Ahimbisibwe Roland",
+            "email": "lonusroland@gmail.com",
+        })
+        self.user_two = dict({
+            "name": "Nabaasa Richard",
+            "email": "nabrick@gmail.com",
+        })
+        with self.app.app_context():
+            migrate()
 
     def tearDown(self):
-        # have a clean storage for every test
-        Storage.clear()
+        pass
 
     def get(self, url):
         return self.client.get(**self._make_options(url))
@@ -37,4 +47,29 @@ class BaseTestCase(TestCase):
         options = dict(path=self._base_url(url))
         if json:
             options["json"] = json
+        if self.auth_token:
+            headers = dict(Authorization=f"Bearer {self.auth_token}")
+            options["headers"] = headers
         return options
+
+    def with_authentication(self):
+        self.login()
+
+    def login(self, user=None):
+        if not user:
+            user = self.user_one
+
+        user["password"] = "password"
+        user["password_confirmation"] = "password"
+
+        rv = self.post("/auth/signup", user)
+        # ensure registration passed since Flask doesn't handle errors
+        # during testing
+
+        assert rv.status_code == 201
+
+        rv = self.post("/auth/login", user)
+
+        assert rv.status_code == 200
+
+        self.auth_token = rv.get_json().get("token")

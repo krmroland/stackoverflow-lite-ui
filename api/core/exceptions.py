@@ -1,4 +1,4 @@
-from werkzeug.exceptions import UnprocessableEntity, NotFound
+from werkzeug.exceptions import UnprocessableEntity, NotFound, Unauthorized
 
 
 class ModelException(Exception):
@@ -7,8 +7,8 @@ class ModelException(Exception):
 
 class ValidationException(UnprocessableEntity):
     def __init__(self, errors):
-        response = dict(message="Validation Failed", errors=errors)
-        super().__init__(response=response)
+        description = dict(message="Validation Failed", errors=errors)
+        super().__init__(description=description)
 
 
 class ModelNotFoundException(NotFound):
@@ -16,4 +16,10 @@ class ModelNotFoundException(NotFound):
         error = "Couldn't find a given resource"
         if table:
             error = f"Coudnot find a {table} resource with  id: {id}"
-        super().__init__(response=dict(error=error))
+
+        super().__init__(description=error)
+
+
+class UnauthorizedException(Unauthorized):
+    def __init__(self, description):
+        super().__init__(description=description)
