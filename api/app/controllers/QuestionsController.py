@@ -24,7 +24,7 @@ class QuestionsController(ProtectedController):
     @classmethod
     def show(cls, id):
         return jsonify({
-            "data": Question.find_or_fail(id)
+            "data": Question.with_answers(id)
         })
 
     @classmethod

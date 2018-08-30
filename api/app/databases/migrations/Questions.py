@@ -9,7 +9,7 @@ class QuestionsTable(Migration):
         table.integer("user_id").references("id").on_table("users")
         table.string("title", 100)
         table.text("description")
-        table.integer("answer_id").nullable()
+        table.integer("prefered_answer_id").nullable()
         table.timestamps()
 
     def down(self):

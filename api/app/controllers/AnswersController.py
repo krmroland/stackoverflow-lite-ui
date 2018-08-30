@@ -32,7 +32,7 @@ class AnswersController(ProtectedController):
         question = Question.find_or_fail(question_id)
 
         if User.owns_question(question):
-            question.update(dict(answer_id=answer_id))
+            question.update(dict(prefered_answer_id=answer_id))
             return jsonify(
                 dict(message="Answer marked as the preferred")
             ), 200

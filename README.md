@@ -2,6 +2,7 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/a0ff7755b693b7523265/maintainability)](https://codeclimate.com/github/krmroland/stackoverflow-lite-ui/maintainability)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f220c8d224a4603adfc367189499c12)](https://www.codacy.com/project/krmroland/stackoverflow-lite-ui/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=krmroland/stackoverflow-lite-ui&amp;utm_campaign=Badge_Grade_Dashboard)
+[![BCH compliance](https://bettercodehub.com/edge/badge/krmroland/stackoverflow-lite-ui?branch=master)](https://bettercodehub.com/)
 
 | Service         | Master        | Develop    |
 | -------------   |-------------|----------|
