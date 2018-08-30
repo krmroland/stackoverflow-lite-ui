@@ -80,4 +80,4 @@ class TestQuestionAnswers(BaseTestCase):
         self.auth_token = token
         self.put(self.answer_url(1))
         question = self.get("/questions/1").get_json().get("data")
-        self.assertEqual(answer["id"], question["answer_id"])
+        self.assertEqual(answer["id"], question["prefered_answer_id"])
