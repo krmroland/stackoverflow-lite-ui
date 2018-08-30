@@ -1,7 +1,7 @@
-from flask import jsonify
+from flask import render_template
 
 
 class HomeController:
     @classmethod
     def index(self):
-        return jsonify({"message": "Stack overflow-lite API"})
+        return render_template('index.html')

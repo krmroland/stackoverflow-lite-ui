@@ -18,5 +18,7 @@ class Flask(BaseFlask):
         """triggers an action related  to this request"""
         adapter = self.create_url_adapter(request)
         name, param = adapter.match()
+        if str(name).startswith("static"):
+            return BaseFlask.dispatch_request(self)
 
         return Router.match(name, param)

@@ -10,7 +10,7 @@ def load_routes(app):
 
 
 def create_app(environment):
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder="docs", static_folder="docs/assets")
 
     app.config.from_object(config[environment])
 
