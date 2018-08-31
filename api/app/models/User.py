@@ -23,7 +23,7 @@ class Auth:
         subject = self.jwt.get_subject_from_headers()
         current_subject = Auth._current_subject
         # user could be cached, there is no reason to make another db query
-        if current_subject and subject == current_subject and Auth._user:
+        if current_subject and subject == current_subject and Auth._User:
             return True
         Auth._current_subject = subject
         Auth._user = self.get_user(subject)
