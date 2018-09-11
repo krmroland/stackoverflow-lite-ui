@@ -4,7 +4,7 @@ from tests.feature import BaseTestCase
 class TestQuestionAnswers(BaseTestCase):
     def setUp(self):
         super().setUp()
-
+        self.with_authentication()
         self.question = dict(
             title="Travis CI",
             description="How do I integrate Travis"
@@ -43,6 +43,12 @@ class TestQuestionAnswers(BaseTestCase):
         rv = self.get(self.answer_url(1))
         self.assertEqual(rv.status_code, 200)
 
+    def test_user_cannot_delete_other_users_answer(self):
+        self.post(self.answers_url(), dict(body="Some existing answer"))
+        self.login(self.user_two)
+        rv = self.delete(self.answer_url(1))
+        self.assertEqual(rv.status_code, 401)
+
     def test_it_updates_an_existing_question_answer(self):
         self.post(self.answers_url(), dict(body="Some existing answer"))
         update = dict(body="Updated answer")
@@ -50,8 +56,28 @@ class TestQuestionAnswers(BaseTestCase):
         answer = rv.get_json()["data"]
         self.assertDictContainsSubset(update, answer)
 
+    def test_it_fails_updating_another_users_answer(self):
+        self.post(self.answers_url(), dict(body="Some existing answer"))
+        self.login(self.user_two)
+        update = dict(body="Updated answer")
+        rv = self.put(self.answer_url(1), update)
+        self.assertEqual(rv.status_code, 401)
+
     def test_it_deletes_an_existing_question(self):
         self.post(self.answers_url(), dict(body="Some existing answer"))
         self.delete(self.answer_url(1))
         rv = self.get(self.answer_url(1))
         self.assertEqual(rv.status_code, 404)
+
+    def test_updating_answer_marks_the_answer_prefered(self):
+        # keep the token for the first user
+        token = self.auth_token
+        self.login(self.user_two)
+        answer = self.post(
+            self.answers_url(), dict(body="Some cool answer")
+        ).get_json().get("data")
+        # swap the tokens to login the first user again
+        self.auth_token = token
+        self.put(self.answer_url(1))
+        question = self.get("/questions/1").get_json().get("data")
+        self.assertEqual(answer["id"], question["prefered_answer_id"])

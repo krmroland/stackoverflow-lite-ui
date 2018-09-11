@@ -1,4 +1,6 @@
+import re
 from api.core.exceptions import ValidationException
+from api.core.db.query import DB
 
 
 class Rule:
@@ -8,12 +10,16 @@ class Rule:
         self.param = param
         self.field = field
 
+    def _set_validator(self, validator):
+        self.validator = validator
+        return self
+
     @property
     def label(self):
         return f"{self.field} field"
 
     @classmethod
-    def _make(cls, rule, value, field):
+    def _make(cls, validator, rule, value, field):
         parts = rule.split(':')
         name = parts[0]
         try:
@@ -21,13 +27,37 @@ class Rule:
         except IndexError:
             param = None
 
-        return Rule(value, name, param, field)
+        return Rule(value, name, param, field)._set_validator(validator)
 
     def required(self):
 
         return self._make_error(
             not self.is_null(),
             f'{self.label} is required'
+        )
+
+    def email(self):
+        is_email = re.match(
+            r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+            str(self.value)
+        )
+        return self._make_error(is_email, f"{self.label} is not a valid email")
+
+    def unique(self):
+        is_unique = DB.table(self.param).where(
+            {self.field: self.value}
+        ).exists()
+
+        return self._make_error(
+            not is_unique, f"{self.field} has already been taken"
+        )
+
+    def confirmed(self):
+        confirmed = self.validator.values.get(f"{self.field}_confirmation")
+
+        return self._make_error(
+            self.value == confirmed,
+            f"{self.label} confirmation doesn't match"
         )
 
     def is_null(self):
@@ -68,7 +98,7 @@ class Validator:
     def _set_rules(self, field, rules):
         value = self.values.get(field, None)
         for rule in str(rules).split("|"):
-            self.rules.append(Rule._make(rule, value, field))
+            self.rules.append(Rule._make(self, rule, value, field))
 
     def _normalize_rules(self, rules):
         for field in rules:
