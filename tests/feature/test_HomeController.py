@@ -8,7 +8,8 @@ class TestHomeController(BaseTestCase):
 
     def test_it_supports_cross_origin_resource_sharing(self):
         rv = self.options("/some/random/path")
-        self.assertEquals(
-            rv.headers.get("Access-Control-Allow-Headers"),
-            "content-type"
+        self.assertIn(
+            "content-type",
+            rv.headers.get("Access-Control-Allow-Headers")
+
         )
