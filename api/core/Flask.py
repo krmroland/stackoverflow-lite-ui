@@ -1,6 +1,5 @@
 from flask import Flask as BaseFlask, request
 from .Request import Request
-from .Response import Response
 from .routing.Router import Router
 from .JSONEncoder import JSONEncoder
 from .commands import migrate_command
@@ -8,7 +7,6 @@ from .commands import migrate_command
 
 class Flask(BaseFlask):
     request_class = Request
-    response_class = Response
     json_encoder = JSONEncoder
 
     def __init__(self, *args, **kwargs):

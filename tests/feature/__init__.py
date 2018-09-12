@@ -28,6 +28,9 @@ class BaseTestCase(TestCase):
     def get(self, url):
         return self.client.get(**self._make_options(url))
 
+    def options(self, url):
+        return self.client.options(**self._make_options(url))
+
     def post(self, url, json=None):
         return self.client.post(**self._make_options(url, json))
 
