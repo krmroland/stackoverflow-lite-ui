@@ -1,7 +1,7 @@
 *.log
 *.log
 /venv
-.py[co]
+*.py[co]
 *.DS_*
 .coverage
 /__pycache__

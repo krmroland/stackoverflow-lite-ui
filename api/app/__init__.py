@@ -9,6 +9,14 @@ def load_routes(app):
         app.url_map.add(Router.register_route(route))
 
 
+def add_cors_support(app):
+    @app.after_request
+    def after_every_request(response):
+        header = response.headers
+        header['Access-Control-Allow-Origin'] = '*'
+        return response
+
+
 def create_app(environment):
     app = Flask(__name__)
 
@@ -17,5 +25,7 @@ def create_app(environment):
     load_routes(app)
 
     handle_errors(app)
+
+    add_cors_support(app)
 
     return app
