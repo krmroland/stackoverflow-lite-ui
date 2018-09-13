@@ -2,6 +2,7 @@ from flask import abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from api.core.models import Model
 from api.core import JWT
+from api.core.exceptions import ValidationException
 
 
 class Auth:
@@ -16,7 +17,7 @@ class Auth:
     def issue_token(self, credentials):
         user = self.get_user(credentials["email"])
         if not user._password_matches(credentials["password"]):
-            return abort(401, "Invalid login credentials")
+            raise ValidationException({"email": ["Invalid login credentials"]})
         return self.jwt.generate_token(user.attributes["email"])
 
     def authenticate(self):

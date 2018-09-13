@@ -16,9 +16,6 @@ errors = [
         "description": "The server  was unable to complete your request"
     },
     {
-        "code": 422
-    },
-    {
         "code": 401
     },
     {
@@ -33,21 +30,26 @@ def _register_error_handler(app, error):
 
     def error_handler(exception):
         description = error.get("description", exception.description)
-        return jsonify(dict(error=description)), code
+        return jsonify(dict(message=description)), code
     app.register_error_handler(code, error_handler)
 
 
 def token_expired(e):
-    return jsonify({"error": "Token has expired"}), 401
+    return jsonify({"message": "Token has expired"}), 401
 
 
 def error_token(e):
-    return jsonify({"error": "Error decoding token"}), 401
+    return jsonify({"message": "Error decoding token"}), 401
+
+
+def validation_error(e):
+    return jsonify({"message": "Validation Failed", "errors": e.errors}), 422
 
 
 def handle_errors(app):
     app.register_error_handler(ExpiredSignatureError, token_expired)
     app.register_error_handler(DecodeError, error_token)
+    app.register_error_handler(422, validation_error)
 
     for error in errors:
         _register_error_handler(app, error)

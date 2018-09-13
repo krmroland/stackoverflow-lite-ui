@@ -29,7 +29,7 @@ class TestAuthentication(BaseTestCase):
     def test_registration_fails_with_an_existing_email(self):
         rv = self.create_user()
         rv = self.create_user()
-        self.assertIn("email", rv.get_json()["error"]["errors"])
+        self.assertIn("email", rv.get_json()["errors"])
 
     # def test_registration_response_doesnot_include_password_field(self):
     #     rv = self.create_user()
@@ -57,7 +57,7 @@ class TestAuthentication(BaseTestCase):
         }
 
         rv = self.post("/auth/login", wrong_credentials)
-        self.assertEqual(rv.status_code, 401)
+        self.assertEqual(rv.status_code, 422)
 
     def test_protected_route_fails_without_authentication(self):
         rv = self.get("/questions")

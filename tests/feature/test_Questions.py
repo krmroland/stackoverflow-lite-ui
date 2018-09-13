@@ -31,7 +31,7 @@ class TestQuestions(BaseTestCase):
 
     def test_it_gives_an_message_with_invalid_data(self):
         rv = self.post("/questions", {})
-        data = rv.get_json()["error"]
+        data = rv.get_json()
         self.assertEqual(data["message"], "Validation Failed")
 
     def test_it_returns_a_question_given_an_existing_id(self):

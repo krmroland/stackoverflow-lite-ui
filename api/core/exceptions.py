@@ -7,8 +7,8 @@ class ModelException(Exception):
 
 class ValidationException(UnprocessableEntity):
     def __init__(self, errors):
-        description = dict(message="Validation Failed", errors=errors)
-        super().__init__(description=description)
+        super().__init__(description='Validation failed')
+        self.errors = errors
 
 
 class ModelNotFoundException(NotFound):
