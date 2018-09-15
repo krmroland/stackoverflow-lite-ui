@@ -79,5 +79,6 @@ class TestQuestionAnswers(BaseTestCase):
         # swap the tokens to login the first user again
         self.auth_token = token
         self.put(self.answer_url(1))
+
         question = self.get("/questions/1").get_json().get("data")
         self.assertEqual(answer["id"], question["prefered_answer_id"])

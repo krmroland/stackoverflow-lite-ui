@@ -14,6 +14,8 @@ class Question(Model):
     @classmethod
     def get_all_with_authors(cls):
         questions = cls.all()
+        if not questions:
+            return questions
         user_ids = [qtn.attributes['user_id'] for qtn in questions]
         users = User.where_in("id", user_ids).get(["id", "name"])
         user_map = {user["id"]: user for user in users}
