@@ -98,6 +98,10 @@ class Model(ModelEvents):
         return cls.query().where(*args, **kwargs)
 
     @classmethod
+    def where_in(cls, column_name, values):
+        return cls.query().where_in(column_name, values)
+
+    @classmethod
     def hydrate(cls, models):
         return [cls(model) for model in models]
 
