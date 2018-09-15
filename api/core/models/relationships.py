@@ -24,8 +24,7 @@ class Relationship(ABC):
         self.ensure_can_persist()
         attributes[self.child_id] = self.parent.attributes[self.parent_id]
         model = self.child(attributes)
-        model.save()
-        return model
+        return model.save()
 
     def children(self):
         return self.child.where({
