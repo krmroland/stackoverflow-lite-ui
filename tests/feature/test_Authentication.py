@@ -39,9 +39,9 @@ class TestAuthentication(BaseTestCase):
         rv = self.post("/auth/login")
         self.assertEqual(rv.status_code, 422)
 
-    def test_login_returns_a_401_response_with_invalid_credentials(self):
+    def test_login_returns_a_422_response_with_invalid_credentials(self):
         rv = self.post("/auth/login", self.login_credentials)
-        self.assertEqual(rv.status_code, 401)
+        self.assertEqual(rv.status_code, 422)
 
     def test_login_returns_a_token_with_valid_credentials(self):
         self.create_user()

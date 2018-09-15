@@ -16,9 +16,12 @@ class Auth:
 
     def issue_token(self, credentials):
         user = self.get_user(credentials["email"])
-        if not user._password_matches(credentials["password"]):
+        if not user or not user._password_matches(credentials["password"]):
             raise ValidationException({"email": ["Invalid login credentials"]})
-        return self.jwt.generate_token(user.attributes["email"])
+        return {
+            "token": self.jwt.generate_token(user.attributes["email"]),
+            "name": user.get_attribute("name")
+        }
 
     def authenticate(self):
         subject = self.jwt.get_subject_from_headers()
@@ -31,16 +34,12 @@ class Auth:
         return True
 
     def is_authenticated(self):
-        self.authenticate()
-        return True
+        return self.authenticate()
 
     def get_user(self, email):
         data = self.UserModel.where(email=email).first()
         if not data:
-            return abort(
-                401,
-                "Authentication Failed (Invalid Login Credentials)"
-            )
+            return None
         return self.UserModel(data)
 
     def id(self):

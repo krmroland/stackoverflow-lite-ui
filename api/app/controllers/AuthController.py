@@ -22,9 +22,6 @@ class AuthController:
 
     @classmethod
     def authenticate_response(cls, data):
-        return jsonify(
-            {
-                "token": User.auth().issue_token(data),
-                "message": "Authentication was successful"
-            }
-        )
+        response = User.auth().issue_token(data)
+        response["message"] = "Authentication was successful"
+        return jsonify(response)
