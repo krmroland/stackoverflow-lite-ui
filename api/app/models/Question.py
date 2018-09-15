@@ -12,6 +12,16 @@ class Question(Model):
         return self.has_many(Answer)
 
     @classmethod
+    def get_all_with_authors(cls):
+        questions = cls.all()
+        user_ids = [qtn.attributes['user_id'] for qtn in questions]
+        users = User.where_in("id", user_ids).get(["id", "name"])
+        user_map = {user["id"]: user for user in users}
+        for qtn in questions:
+            qtn.attributes["author"] = user_map.get(qtn["user_id"])
+        return questions
+
+    @classmethod
     def with_answers(cls, id):
         question = cls.find_or_fail(id)
         question_id = question.attributes.get("id")

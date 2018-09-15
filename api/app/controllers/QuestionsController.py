@@ -12,7 +12,7 @@ class QuestionsController(ProtectedController):
     @classmethod
     def index(cls):
         return jsonify({
-            "data": Question.all()
+            "data": Question.get_all_with_authors()
         })
 
     @classmethod

@@ -43,14 +43,25 @@ class DB:
         self._where_bindings = list(filters.values())
         return self
 
+    def where_in(self, column_name, values):
+        place_holders = ",".join(["%s"] * len(values))
+        self._wheres = f"WHERE {column_name} in ({place_holders})"
+        self._where_bindings = values
+        return self
+
     def where(self, *args, **kwargs):
         return self.base_where("and", args, kwargs)
 
     def or_where(self, *args, **kwargs):
         return self.base_where("or", args, kwargs)
 
-    def get(self):
-        sql = f"SELECT * from {self.table_name}  {self._wheres}"
+    def get(self, fields=None):
+        if fields:
+            fields = ",".join([field for field in fields])
+        else:
+            fields = "*"
+
+        sql = f"SELECT {fields} from {self.table_name}  {self._wheres}"
 
         try:
             self.cursor.execute(sql, self._where_bindings)
