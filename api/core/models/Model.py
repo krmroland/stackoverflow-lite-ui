@@ -18,7 +18,6 @@ class Model(ModelEvents):
         if not attributes:
             attributes = {}
         self.attributes = attributes
-        self.is_persisted = False
 
     def id(self):
         return self.attributes.get("id", None)
@@ -37,10 +36,10 @@ class Model(ModelEvents):
 
     @classmethod
     def create(cls, attributes):
-        cls._update_timestamps(attributes)
+        attributes = cls._update_timestamps(attributes)
         model = cls(attributes)
         model._creating()
-        cls.query().insert(attributes)
+        model.attributes = cls.query().insert(attributes)
         return model
 
     @classmethod
@@ -49,8 +48,10 @@ class Model(ModelEvents):
             return attributes
         now = time_now()
         if attributes.get("created_at", None):
-            return attributes.update(dict(updated_at=now))
-        return attributes.update(dict(updated_at=now, created_at=now))
+            attributes.update(dict(updated_at=now))
+        else:
+            attributes.update(dict(updated_at=now, created_at=now))
+        return attributes
 
     def delete(self):
         if not self.id():
@@ -64,7 +65,9 @@ class Model(ModelEvents):
     def save(self):
         self._update_timestamps(self.attributes)
         if self.id():
-            self.query().where({"id": self.id()}).update(self.attributes)
+            self.attributes = self.query().where(
+                {"id": self.id()}
+            ).update(self.attributes)
             return self
         return self.create(self.attributes)
 
@@ -96,6 +99,10 @@ class Model(ModelEvents):
     @classmethod
     def where(cls, *args, **kwargs):
         return cls.query().where(*args, **kwargs)
+
+    @classmethod
+    def where_in(cls, column_name, values):
+        return cls.query().where_in(column_name, values)
 
     @classmethod
     def hydrate(cls, models):

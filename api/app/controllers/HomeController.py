@@ -13,6 +13,9 @@ class HomeController:
             'Access-Control-Allow-Methods',
             'POST,GET,DELETE,PUT,PATCH'
         )
-        response.headers.add('Access-Control-Allow-Headers', 'content-type')
+        response.headers.add(
+            'Access-Control-Allow-Headers',
+            'content-type,Authorization'
+        )
 
         return response

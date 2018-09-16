@@ -69,10 +69,6 @@ class BaseTestCase(TestCase):
         # ensure registration passed since Flask doesn't handle errors
         # during testing
 
-        assert rv.status_code == 201
-
-        rv = self.post("/auth/login", user)
-
         assert rv.status_code == 200
 
         self.auth_token = rv.get_json().get("token")

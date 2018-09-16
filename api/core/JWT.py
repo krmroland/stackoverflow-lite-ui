@@ -6,7 +6,7 @@ import jwt
 class JWT:
     def __init__(self, algorithm="HS256"):
         self.secret = current_app.config.get("SECRET")
-        self.expires = datetime.utcnow() + timedelta(minutes=15)
+        self.expires = datetime.utcnow() + timedelta(hours=1)
         self.algorithm = algorithm
 
     def _make_options(self):
