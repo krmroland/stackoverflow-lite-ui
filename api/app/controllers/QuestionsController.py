@@ -3,8 +3,8 @@ from api.app.models import Question, User
 from .ProtectedController import ProtectedController
 
 validation_rules = {
-    "title": "required|min_length:3|max_length:50",
-    "description": "required|min_length:3|max_length:200"
+    "title": "required|min_length:3|max_length:250",
+    "description": "required|min_length:3"
 }
 
 
