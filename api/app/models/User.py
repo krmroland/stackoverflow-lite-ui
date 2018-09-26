@@ -77,5 +77,16 @@ class User(Model):
         return User.auth().id() == entity.get_attribute(attribute)
 
     @classmethod
+    def add_entity_authors(cls, entities, column="user_id"):
+        if not entities:
+            return entities
+        user_ids = [row[column] for row in entities]
+        users = User.where_in("id", user_ids).get(["id", "name"])
+        user_map = {user["id"]: user for user in users}
+        for row in entities:
+            row["author"] = user_map.get(row[column])
+        return entities
+
+    @classmethod
     def auth(cls):
         return Auth(cls)

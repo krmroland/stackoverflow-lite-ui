@@ -13,23 +13,21 @@ class Question(Model):
 
     @classmethod
     def get_all_with_authors(cls):
-        questions = cls.all()
-        if not questions:
-            return questions
-        user_ids = [qtn.attributes['user_id'] for qtn in questions]
-        users = User.where_in("id", user_ids).get(["id", "name"])
-        user_map = {user["id"]: user for user in users}
-        for qtn in questions:
-            qtn.attributes["author"] = user_map.get(qtn["user_id"])
-        return questions
+        return User.add_entity_authors(cls.all().to_json())
 
     @classmethod
     def with_answers(cls, id):
         question = cls.find_or_fail(id)
+        author = User.where(id=question.attributes["user_id"]).get(
+            ["name", "email"]
+        )
+        if author:
+            author = author[0]
+
+        question.attributes["author"] = author
         question_id = question.attributes.get("id")
-        question.attributes["answers"] = Answer.where(
-            question_id=question_id
-        ).get()
+        answers = Answer.where(question_id=question_id).get()
+        question.attributes["answers"] = User.add_entity_authors(answers)
         return question
 
     def _creating(self):
