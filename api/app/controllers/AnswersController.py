@@ -20,6 +20,7 @@ class AnswersController(ProtectedController):
         answer = question.answers().create(request.validate({
             "body": "required"
         }))
+
         return jsonify(dict(data=answer)), 201
 
     @classmethod

@@ -13,3 +13,7 @@ class Answer(Model):
 
     def _creating(self):
         self.attributes["user_id"] = User.auth().id()
+
+    @classmethod
+    def count_for_user(cls, user):
+        return cls.where({"user_id": user.attributes["id"]}).count()

@@ -28,6 +28,9 @@ class BaseTestCase(TestCase):
     def get(self, url):
         return self.client.get(**self._make_options(url))
 
+    def options(self, url):
+        return self.client.options(**self._make_options(url))
+
     def post(self, url, json=None):
         return self.client.post(**self._make_options(url, json))
 
@@ -65,10 +68,6 @@ class BaseTestCase(TestCase):
         rv = self.post("/auth/signup", user)
         # ensure registration passed since Flask doesn't handle errors
         # during testing
-
-        assert rv.status_code == 201
-
-        rv = self.post("/auth/login", user)
 
         assert rv.status_code == 200
 

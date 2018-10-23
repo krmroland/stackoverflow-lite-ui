@@ -7,7 +7,6 @@ from .commands import migrate_command
 
 class Flask(BaseFlask):
     request_class = Request
-
     json_encoder = JSONEncoder
 
     def __init__(self, *args, **kwargs):

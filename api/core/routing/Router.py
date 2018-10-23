@@ -29,6 +29,12 @@ class Router:
         return cls.add("POST", url, controller, method)
 
     @classmethod
+    def options(cls, url, controller, method):
+        """creates a route of type OPTIONS"""
+
+        return cls.add("OPTIONS", url, controller, method)
+
+    @classmethod
     def delete(cls, url, controller, method):
         """ creates a route of type delete"""
         return cls.add("DELETE", url, controller, method)
