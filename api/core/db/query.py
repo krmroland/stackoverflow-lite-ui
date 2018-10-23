@@ -82,6 +82,12 @@ class DB:
             self.connection.rollback()
             raise e
 
+    def count(self):
+        """counts the number of items """
+        sql = f"SELECT count(*) from {self.table_name} {self._wheres}"
+        self.cursor.execute(sql, self._where_bindings)
+        return self._fetch_one()["count"]
+
     def delete(self):
         if not self._where_bindings:
             return False  # pragma: no cover
@@ -149,6 +155,10 @@ class DB:
 
     def find_or_fail(self, id):
         return self._result_or_fail(self.find(id))
+
+    def raw(self, query):
+        self.cursor.execute(query)
+        return self._fetch_all()
 
     @classmethod
     def _result_or_fail(cls, result):
